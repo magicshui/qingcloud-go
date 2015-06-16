@@ -1,12 +1,12 @@
-package qingcloud
+package router
 
 import (
 	"encoding/json"
-	"github.com/magicshui/qingcloud-go/router"
+	"github.com/magicshui/qingcloud-go"
 )
 
-func (c *Client) DescribeRouters(routers string, status string, search_word string, verbose int, offset int, limit int) ([]router.Router, error) {
-	params := []*Param{
+func (c *Client) DescribeRouters(routers string, status string, search_word string, verbose int, offset int, limit int) ([]Router, error) {
+	params := []*qingcloud.Param{
 		{"routers.1", routers},
 		{"status.1", status},
 		{"search_word", search_word},
@@ -20,7 +20,7 @@ func (c *Client) DescribeRouters(routers string, status string, search_word stri
 		return nil, err
 	}
 	var response struct {
-		routers []router.Router `json:"router_statics"`
+		routers []Router `json:"router_statics"`
 	}
 	err = json.Unmarshal(result, &response)
 	if err != nil {
@@ -30,7 +30,7 @@ func (c *Client) DescribeRouters(routers string, status string, search_word stri
 }
 
 func (c *Client) UpdateRouters(routers string) error {
-	params := []*Param{
+	params := []*qingcloud.Param{
 		{"routers.1", routers},
 	}
 
@@ -49,7 +49,7 @@ func (c *Client) UpdateRouters(routers string) error {
 
 }
 func (c *Client) AddRouterStatics(router string, router_static_name string, static_type int, val1, val2, val3, val4 string) (string, error) {
-	params := []*Param{
+	params := []*qingcloud.Param{
 		{"router", router},
 		{"statics.1.router_static_name", router_static_name},
 		{"statics.1.static_type", static_type},
@@ -74,7 +74,7 @@ func (c *Client) AddRouterStatics(router string, router_static_name string, stat
 }
 
 func (c *Client) DeleteRouterStatics(router_statics string) (bool, error) {
-	params := []*Param{
+	params := []*qingcloud.Param{
 		{"router_statics.1", router_statics},
 	}
 

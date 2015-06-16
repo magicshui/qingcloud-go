@@ -38,11 +38,9 @@ func (c *Client) addAction(action string) {
 }
 
 func (c *Client) addTimeStamp() {
-
 	c.Params = append(c.Params, &Param{
-		"time_stamp", time.Now().Add(-time.Hour * 8).Format("2006-01-02T15:04:05Z"),
+		"time_stamp", time.Now().UTC().Format("2006-01-02T15:04:05Z"),
 	})
-
 }
 
 func (c *Client) getUrl(httpMethod string) (string, string) {
@@ -66,6 +64,34 @@ func (c *Client) Get(action string, params Params) ([]byte, error) {
 	c.addAction(action)
 	c.addTimeStamp()
 	_url, _sig := c.getUrl("GET")
+	url := fmt.Sprintf("https://api.qingcloud.com/iaas/?%v&signature=%v", _url, _sig)
+
+	result, err := requests.GetHttpsRequest(url)
+
+	if err != nil {
+		return nil, err
+	}
+
+	var hasError QCError
+	err = json.Unmarshal(result, &hasError)
+	if err != nil {
+		return nil, err
+	}
+	if hasError.RetCode > 0 {
+		return nil, errors.New(hasError.Message)
+	}
+	return result, nil
+}
+
+func (c *Client) Post(action string, params Params) ([]byte, error) {
+	var _p []*Param
+	c.Params = _p
+	for i, _ := range params {
+		c.Params = append(c.Params, params[i])
+	}
+	c.addAction(action)
+	c.addTimeStamp()
+	_url, _sig := c.getUrl("POST")
 	url := fmt.Sprintf("https://api.qingcloud.com/iaas/?%v&signature=%v", _url, _sig)
 
 	result, err := requests.GetHttpsRequest(url)
