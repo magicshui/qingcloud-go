@@ -1,94 +1,62 @@
 package router
 
 import (
-	"encoding/json"
 	"github.com/magicshui/qingcloud-go"
 )
 
-func (c *Client) DescribeRouters(routers string, status string, search_word string, verbose int, offset int, limit int) ([]Router, error) {
-	params := []*qingcloud.Param{
-		{"routers.1", routers},
-		{"status.1", status},
-		{"search_word", search_word},
-		{"verbose", verbose},
-		{"offset", offset},
-		{"limit", limit},
-	}
-
-	result, err := c.Get("DescribeRouters", params)
-	if err != nil {
-		return nil, err
-	}
-	var response struct {
-		routers []Router `json:"router_statics"`
-	}
-	err = json.Unmarshal(result, &response)
-	if err != nil {
-		return nil, err
-	}
-	return response.routers, nil
+func (c *Client) DescribeRouters(params qingcloud.Params) ([]byte, error) {
+	return c.Get("DescribeRouters", params)
+}
+func (c *Client) CreateRouters(params qingcloud.Params) ([]byte, error) {
+	return c.Get("CreateRouters", params)
+}
+func (c *Client) DeleteRouters(params qingcloud.Params) ([]byte, error) {
+	return c.Get("DeleteRouters", params)
+}
+func (c *Client) UpdateRouters(params qingcloud.Params) ([]byte, error) {
+	return c.Get("UpdateRouters", params)
+}
+func (c *Client) PowerOffRouters(params qingcloud.Params) ([]byte, error) {
+	return c.Get("PowerOffRouters", params)
 }
 
-func (c *Client) UpdateRouters(routers string) error {
-	params := []*qingcloud.Param{
-		{"routers.1", routers},
-	}
-
-	result, err := c.Get("UpdateRouters", params)
-	if err != nil {
-		return err
-	}
-	var response struct {
-		RouterStatics []string `json:"router_statics"`
-	}
-	err = json.Unmarshal(result, &response)
-	if err != nil {
-		return err
-	}
-	return nil
-
+func (c *Client) PowerOnRouters(params qingcloud.Params) ([]byte, error) {
+	return c.Get("PowerOnRouters", params)
 }
-func (c *Client) AddRouterStatics(router string, router_static_name string, static_type int, val1, val2, val3, val4 string) (string, error) {
-	params := []*qingcloud.Param{
-		{"router", router},
-		{"statics.1.router_static_name", router_static_name},
-		{"statics.1.static_type", static_type},
-		{"statics.1.val1", val1},
-		{"statics.1.val2", val2},
-		{"statics.1.val3", val3},
-		{"statics.1.val4", val4},
-	}
-
-	result, err := c.Get("AddRouterStatics", params)
-	if err != nil {
-		return "", err
-	}
-	var response struct {
-		RouterStatics []string `json:"router_statics"`
-	}
-	err = json.Unmarshal(result, &response)
-	if err != nil {
-		return "", err
-	}
-	return response.RouterStatics[0], nil
+func (c *Client) JoinRouter(params qingcloud.Params) ([]byte, error) {
+	return c.Get("JoinRouter", params)
+}
+func (c *Client) LeaveRouter(params qingcloud.Params) ([]byte, error) {
+	return c.Get("LeaveRouter", params)
+}
+func (c *Client) ModifyRouterAttributes(params qingcloud.Params) ([]byte, error) {
+	return c.Get("ModifyRouterAttributes", params)
+}
+func (c *Client) DescribeRouterStatics(params qingcloud.Params) ([]byte, error) {
+	return c.Get("DescribeRouterStatics", params)
+}
+func (c *Client) AddRouterStatics(params qingcloud.Params) ([]byte, error) {
+	return c.Get("AddRouterStatics", params)
+}
+func (c *Client) ModifyRouterStaticAttributes(params qingcloud.Params) ([]byte, error) {
+	return c.Get("ModifyRouterStaticAttributes", params)
+}
+func (c *Client) DeleteRouterStatics(params qingcloud.Params) ([]byte, error) {
+	return c.Get("DeleteRouterStatics", params)
+}
+func (c *Client) DescribeRouterVxnets(params qingcloud.Params) ([]byte, error) {
+	return c.Get("DescribeRouterVxnets", params)
+}
+func (c *Client) AddRouterStaticEntries(params qingcloud.Params) ([]byte, error) {
+	return c.Get("AddRouterStaticEntries", params)
 }
 
-func (c *Client) DeleteRouterStatics(router_statics string) (bool, error) {
-	params := []*qingcloud.Param{
-		{"router_statics.1", router_statics},
-	}
-
-	result, err := c.Get("DeleteRouterStatics", params)
-	if err != nil {
-		return false, err
-	}
-	var response struct {
-		RouterStatics []string `json:"router_statics"`
-	}
-	err = json.Unmarshal(result, &response)
-	if err != nil {
-		return false, err
-	}
-	return response.RouterStatics[0] == router_statics, nil
-
+func (c *Client) DeleteRouterStaticEntries(params qingcloud.Params) ([]byte, error) {
+	return c.Get("DeleteRouterStaticEntries", params)
+}
+func (c *Client) ModifyRouterStaticEntryAttributes(params qingcloud.Params) ([]byte, error) {
+	return c.Get("ModifyRouterStaticEntryAttributes", params)
+}
+func (c *Client) DescribeRouterStaticEntries(params qingcloud.Params) ([]byte, error) {
+	return c.Get("DescribeRouterStaticEntries", params)
 }
