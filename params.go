@@ -37,7 +37,7 @@ func sortParamsByKey(ps Params) Params {
 func urlEscapeParams(ps Params) Params {
 	for i, _ := range ps {
 		if str, ok := ps[i].Value.(string); ok {
-			ps[i].Value = url.QueryEscape(str)
+			ps[i].Value = strings.Replace(url.QueryEscape(str), "+", "%20", -1)
 		}
 	}
 	return ps
