@@ -4,21 +4,12 @@ import (
 	"github.com/magicshui/qingcloud-go"
 )
 
-func (c *Client) DescribeKeyPairs(params qingcloud.Params) ([]byte, error) {
-	return c.Get("DescribeKeyPairs", params)
+type DescribeKeyPairsRequest struct {
 }
-func (c *Client) CreateKeyPair(params qingcloud.Params) ([]byte, error) {
-	return c.Get("CreateKeyPair", params)
-}
-func (c *Client) DeleteKeyPairs(params qingcloud.Params) ([]byte, error) {
-	return c.Get("DeleteKeyPairs", params)
-}
-func (c *Client) AttachKeyPairs(params qingcloud.Params) ([]byte, error) {
-	return c.Get("AttachKeyPairs", params)
-}
-func (c *Client) DetachKeyPairs(params qingcloud.Params) ([]byte, error) {
-	return c.Get("DetachKeyPairs", params)
-}
-func (c *Client) ModifyKeyPairAttributes(params qingcloud.Params) ([]byte, error) {
-	return c.Get("ModifyKeyPairAttributes", params)
+type DescribeKeyPairsResponse qingcloud.CommonResponse
+
+func DescribeKeyPairs(c *qingcloud.Client, params DescribeKeyPairsRequest) (DescribeKeyPairsResponse, error) {
+	var result DescribeKeyPairsResponse
+	err := c.Get("DescribeKeyPairs", qingcloud.TransfomRequestToParams(&params), &result)
+	return result, err
 }

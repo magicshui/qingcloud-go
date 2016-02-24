@@ -56,13 +56,10 @@ func genSignatureUrl(httpMethod string, uri string, url string) string {
 }
 
 func genSignature(signUrl, secret string) string {
-
 	key := []byte(secret)
 	mac := hmac.New(sha256.New, key)
 	mac.Write([]byte(signUrl))
-
 	sEnc := b64.StdEncoding.EncodeToString(mac.Sum(nil))
-
 	strings.Replace(sEnc, " ", "+", -1)
 	fin := url.QueryEscape(sEnc)
 	return fin
