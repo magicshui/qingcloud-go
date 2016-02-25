@@ -56,15 +56,10 @@ func (c *Client) getUrl(httpMethod string) (string, string) {
 		c.params = append(c.params, v)
 	}
 	sortParamsByKey(c.params)
-	// log.Printf("%v", c.params)
 	urlEscapeParams(c.params)
-	// log.Printf("%v", c.params)
 	url := generateUrlByParams(c.params)
 	url2 := genSignatureUrl(httpMethod, `/iaas/`, url)
 	sig := genSignature(url2, c.secretAccessKey)
-	// log.Printf("url:%s", url)
-	// log.Printf("url2: %s", url2)
-	// log.Printf("sig: %s", sig)
 	return url, sig
 }
 
@@ -73,12 +68,41 @@ func (c *Client) Get(action string, params Params, response interface{}) error {
 	if err != nil {
 		return err
 	}
-	// log.Printf("%s", string(result))
 	err = json.Unmarshal(result, &response)
 	if err != nil {
 		return err
 	}
 	return nil
+}
+func (c *Client) Post(action string, params Params, response interface{}) error {
+	result, err := c.post(action, params)
+	if err != nil {
+		return err
+	}
+	err = json.Unmarshal(result, &response)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// TODO: fix this
+func (c *Client) post(action string, params Params) ([]byte, error) {
+	var _p []*Param
+	c.params = _p
+	for i, _ := range params {
+		c.params = append(c.params, params[i])
+	}
+	c.addAction(action)
+	c.addTimeStamp()
+	_url, _sig := c.getUrl("Post")
+	url := fmt.Sprintf("https://api.qingcloud.com/iaas/?%v&signature=%v", _url, _sig)
+	http.Post(url, "application/json;utf-8", nil)
+	res, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	return ioutil.ReadAll(res.Body)
 }
 
 func (c *Client) get(action string, params Params) ([]byte, error) {
