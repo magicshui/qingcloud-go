@@ -10,6 +10,6 @@ type DescribeDNSAliasesResponse qingcloud.CommonResponse
 
 func DescribeDNSAliases(c *qingcloud.Client, params DescribeDNSAliasesRequest) (DescribeDNSAliasesResponse, error) {
 	var result DescribeDNSAliasesResponse
-	err := c.Get("DescribeDNSAliases", qingcloud.TransfomerRequestToParams(&params), &result)
+	err := c.Get("DescribeDNSAliases", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
 }

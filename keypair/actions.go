@@ -53,7 +53,7 @@ type CreateKeyPairResponse struct {
 // 另外用户也可以通过已有公钥来创建 SSH 密钥。
 func CreateKeyPair(c *qingcloud.Client, params CreateKeyPairRequest) (CreateKeyPairResponse, error) {
 	var result CreateKeyPairResponse
-	err := c.Get("CreateKeyPair", qingcloud.TransfomerRequestToParams(&params), &result)
+	err := c.Get("CreateKeyPair", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
 }
 
@@ -69,7 +69,7 @@ type DeleteKeyPairsResponse struct {
 // 删除一个或多个你拥有的密钥对。密钥对须在未使用的情况下才能被删除， 已加载到主机的密钥对需先卸载后才能删除， 关于卸载密钥对可参考 DetachKeyPairs
 func DeleteKeyPairs(c *qingcloud.Client, params DeleteKeyPairsRequest) (DeleteKeyPairsResponse, error) {
 	var result DeleteKeyPairsResponse
-	err := c.Get("DeleteKeyPairs", qingcloud.TransfomerRequestToParams(&params), &result)
+	err := c.Get("DeleteKeyPairs", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
 }
 
@@ -83,7 +83,7 @@ type AttachKeyPairsResponse qingcloud.QCError
 // 将任意数量密钥对加载到任意数量的主机， 主机状态须为“运行中”（ running ）或“已关机”（ stopped ）。
 func AttachKeyPairs(c *qingcloud.Client, params AttachKeyPairsRequest) (AttachKeyPairsResponse, error) {
 	var result AttachKeyPairsResponse
-	err := c.Get("AttachKeyPairs", qingcloud.TransfomerRequestToParams(&params), &result)
+	err := c.Get("AttachKeyPairs", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
 }
 
@@ -97,7 +97,7 @@ type DetachKeyPairsResponse qingcloud.QCError
 // 将任意数量的密钥对从主机中卸载， 主机状态须为“运行中”（ running ）或“已关机”（ stopped ）。
 func DetachKeyPairs(c *qingcloud.Client, params DetachKeyPairsRequest) (DetachKeyPairsResponse, error) {
 	var result DetachKeyPairsResponse
-	err := c.Get("DetachKeyPairs", qingcloud.TransfomerRequestToParams(&params), &result)
+	err := c.Get("DetachKeyPairs", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
 }
 
@@ -112,6 +112,6 @@ type ModifyKeyPairAttributesResponse qingcloud.QCError
 // 一次只能修改一个密钥对。
 func ModifyKeyPairAttributes(c *qingcloud.Client, params ModifyKeyPairAttributesRequest) (ModifyKeyPairAttributesResponse, error) {
 	var result ModifyKeyPairAttributesResponse
-	err := c.Get("ModifyKeyPairAttributes", qingcloud.TransfomerRequestToParams(&params), &result)
+	err := c.Get("ModifyKeyPairAttributes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
 }
