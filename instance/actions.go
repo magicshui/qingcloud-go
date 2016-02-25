@@ -9,12 +9,13 @@ type DescribeInstanceRequest struct {
 	ImageIdN      qingcloud.NumberedString
 	InstanceTypeN qingcloud.NumberedString
 	InstanceClass qingcloud.Integer
-	StatusN       qingcloud.String
-	SearchWord    qingcloud.String
-	TagsN         qingcloud.NumberedString
-	Verbose       qingcloud.Integer
-	Offset        qingcloud.Integer
-	Limit         qingcloud.Integer
+
+	StatusN    qingcloud.String
+	SearchWord qingcloud.String
+	TagsN      qingcloud.NumberedString
+	Verbose    qingcloud.Integer
+	Offset     qingcloud.Integer
+	Limit      qingcloud.Integer
 }
 
 type DescribeInstanceResponse struct {
