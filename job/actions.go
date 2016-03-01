@@ -4,6 +4,16 @@ import (
 	"github.com/magicshui/qingcloud-go"
 )
 
+type JOB struct {
+	*qingcloud.Client
+}
+
+func NewClient(clt *qingcloud.Client) *JOB {
+	return &JOB{
+		Client: clt,
+	}
+}
+
 type DescribeJobsRequest struct {
 	JobsN     qingcloud.NumberedString
 	StatusN   qingcloud.NumberedString

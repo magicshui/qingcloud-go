@@ -4,6 +4,16 @@ import (
 	"github.com/magicshui/qingcloud-go"
 )
 
+type IMAGE struct {
+	*qingcloud.Client
+}
+
+func NewClient(clt *qingcloud.Client) *IMAGE {
+	return &IMAGE{
+		Client: clt,
+	}
+}
+
 type DescribeImagesRequest struct {
 	ImagesN       qingcloud.NumberedString
 	ProcessorType qingcloud.String

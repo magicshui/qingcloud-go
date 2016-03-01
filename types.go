@@ -6,10 +6,35 @@ import (
 
 type String struct {
 	value string
+	enums map[string]bool
+	write bool
 }
 
+// TODO:
 func (s *String) Set(t string) {
-	s.value = t
+	if len(s.enums) != 0 {
+		if _, ok := s.enums[t]; ok {
+			s.value = t
+			s.write = true
+		}
+	} else {
+		s.value = t
+		s.write = true
+	}
+}
+
+// 对设置的内容进行修改
+func (s *String) Enum(t ...string) {
+	if s.enums == nil {
+		s.enums = make(map[string]bool)
+		for _, o := range t {
+			s.enums[o] = true
+		}
+	}
+	if _, ok := s.enums[s.value]; !ok {
+		s.value = ""
+		s.write = false
+	}
 }
 
 func (s *String) String() string {
@@ -19,6 +44,7 @@ func (s *String) String() string {
 type NumberedString struct {
 	values map[string]bool
 	enums  map[string]bool
+	write  bool
 }
 
 func (s *NumberedString) String() string {
@@ -29,9 +55,13 @@ func (s *NumberedString) String() string {
 	return strings.Join(a, ",")
 }
 func (s *NumberedString) Add(t ...string) {
+	if s.enums == nil {
+		s.enums = make(map[string]bool)
+	}
 	if s.values == nil {
 		s.values = make(map[string]bool)
 	}
+
 	for _, o := range t {
 		if len(s.enums) != 0 {
 			if _, ok := s.enums[o]; ok {
@@ -40,16 +70,22 @@ func (s *NumberedString) Add(t ...string) {
 		} else {
 			s.values[o] = true
 		}
-
 	}
 }
-
 func (s *NumberedString) Enum(e ...string) {
 	if s.enums == nil {
 		s.enums = make(map[string]bool)
+		for _, o := range e {
+			s.enums[o] = true
+		}
 	}
-	for _, o := range e {
-		s.enums[o] = true
+	for k, _ := range s.values {
+		if _, ok := s.enums[k]; !ok {
+			delete(s.values, k)
+		}
+	}
+	if len(s.values) == 0 {
+		s.write = false
 	}
 }
 
@@ -80,8 +116,31 @@ func (s *Integer) Enum(e ...int) {
 
 // TODO 实现这个类型
 type NumberedInteger struct {
-	values map[string]bool
-	enums  map[string]bool
+	values map[int64]bool
+	enums  map[int64]bool
+}
+
+func (s *NumberedInteger) Add(t ...int64) {
+	if s.values == nil {
+		s.values = make(map[int64]bool)
+	}
+	for _, o := range t {
+		if len(s.enums) != 0 {
+			if _, ok := s.enums[o]; ok {
+				s.values[o] = true
+			}
+		} else {
+			s.values[o] = true
+		}
+	}
+}
+func (s *NumberedInteger) Enum(e ...int64) {
+	if s.enums == nil {
+		s.enums = make(map[int64]bool)
+	}
+	for _, o := range e {
+		s.enums[o] = true
+	}
 }
 
 // TODO 实现这个类型

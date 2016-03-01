@@ -2,10 +2,12 @@ package qingcloud
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -15,6 +17,7 @@ type Client struct {
 	secretAccessKey string `json:"secret_access_key"`
 	params          Params
 	commonParams    Params
+	l               sync.Mutex
 }
 
 func NewClient() *Client {
@@ -64,10 +67,18 @@ func (c *Client) getUrl(httpMethod string) (string, string) {
 }
 
 func (c *Client) Get(action string, params Params, response interface{}) error {
+	c.l.Lock()
+	defer c.l.Unlock()
 	result, err := c.get(action, params)
 	if err != nil {
 		return err
 	}
+	var errCode CommonResponse
+	json.Unmarshal(result, &errCode)
+	if errCode.RetCode != 0 {
+		return errors.New(errCode.Message)
+	}
+
 	err = json.Unmarshal(result, &response)
 	if err != nil {
 		return err
@@ -75,6 +86,8 @@ func (c *Client) Get(action string, params Params, response interface{}) error {
 	return nil
 }
 func (c *Client) Post(action string, params Params, response interface{}) error {
+	c.l.Lock()
+	defer c.l.Unlock()
 	result, err := c.post(action, params)
 	if err != nil {
 		return err
@@ -120,5 +133,6 @@ func (c *Client) get(action string, params Params) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	return ioutil.ReadAll(res.Body)
 }

@@ -1,5 +1,9 @@
 package keypair
 
+import (
+	"time"
+)
+
 type Keypair struct {
 	Description   interface{} `json:"description"`
 	EncryptMethod string      `json:"encrypt_method"`

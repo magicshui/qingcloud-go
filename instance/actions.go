@@ -4,6 +4,16 @@ import (
 	"github.com/magicshui/qingcloud-go"
 )
 
+type INSTANCE struct {
+	*qingcloud.Client
+}
+
+func NewClient(clt *qingcloud.Client) *INSTANCE {
+	return &INSTANCE{
+		Client: clt,
+	}
+}
+
 type DescribeInstanceRequest struct {
 	InstancesN    qingcloud.NumberedString
 	ImageIdN      qingcloud.NumberedString
@@ -28,6 +38,10 @@ type DescribeInstanceResponse struct {
 // 可根据主机ID, 状态, 主机名称, 映像ID 作过滤条件, 来获取主机列表。 如果不指定任何过滤条件, 默认返回你所拥有的所有主机。
 func DescribeInstances(c *qingcloud.Client, params DescribeInstanceRequest) (DescribeInstanceResponse, error) {
 	var result DescribeInstanceResponse
+	// 主机性能类型: 性能型:0 ,超高性能型:1
+	params.InstanceClass.Enum(0, 1)
+	// 主机状态: pending, running, stopped, suspended, terminated, ceased
+	params.InstanceTypeN.Enum("pending", "running", "stopped", "suspended", "terminated", "ceased")
 	err := c.Get("DescribeInstances", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
 }

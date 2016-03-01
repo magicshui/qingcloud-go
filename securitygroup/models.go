@@ -5,12 +5,12 @@ import (
 )
 
 type SecurityGroup struct {
-	IsApplied         int         `json:"is_applied"`
-	Description       interface{} `json:"description"`
-	SecurityGroupID   string      `json:"security_group_id"`
-	IsDefault         int         `json:"is_default"`
-	CreateTime        time.Time   `json:"create_time"`
-	SecurityGroupName string      `json:"security_group_name"`
+	IsApplied         int       `json:"is_applied"`
+	Description       string    `json:"description"`
+	SecurityGroupID   string    `json:"security_group_id"`
+	IsDefault         int       `json:"is_default"`
+	CreateTime        time.Time `json:"create_time"`
+	SecurityGroupName string    `json:"security_group_name"`
 	Resources         []struct {
 		ResourceName string `json:"resource_name"`
 		ResourceType string `json:"resource_type"`

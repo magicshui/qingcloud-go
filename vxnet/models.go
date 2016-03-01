@@ -5,26 +5,21 @@ import (
 )
 
 type Vxnet struct {
-	Action     string `json:"action"`
-	TotalCount int    `json:"total_count"`
-	VxnetSet   []struct {
-		VxnetType   int       `json:"vxnet_type"`
-		VxnetID     string    `json:"vxnet_id"`
-		InstanceIds []string  `json:"instance_ids"`
-		VxnetName   string    `json:"vxnet_name"`
-		CreateTime  time.Time `json:"create_time"`
-		Router      struct {
-			RouterID   string `json:"router_id"`
-			RouterName string `json:"router_name"`
-			ManagerIP  string `json:"manager_ip"`
-			IPNetwork  string `json:"ip_network"`
-			DynIPEnd   string `json:"dyn_ip_end"`
-			DynIPStart string `json:"dyn_ip_start"`
-			Mode       int    `json:"mode"`
-		} `json:"router"`
-		Description interface{} `json:"description"`
-	} `json:"vxnet_set"`
-	RetCode int `json:"ret_code"`
+	VxnetType   int       `json:"vxnet_type"`
+	VxnetID     string    `json:"vxnet_id"`
+	InstanceIds []string  `json:"instance_ids"`
+	VxnetName   string    `json:"vxnet_name"`
+	CreateTime  time.Time `json:"create_time"`
+	Router      struct {
+		RouterID   string `json:"router_id"`
+		RouterName string `json:"router_name"`
+		ManagerIP  string `json:"manager_ip"`
+		IPNetwork  string `json:"ip_network"`
+		DynIPEnd   string `json:"dyn_ip_end"`
+		DynIPStart string `json:"dyn_ip_start"`
+		Mode       int    `json:"mode"`
+	} `json:"router"`
+	Description interface{} `json:"description"`
 }
 
 type Instance struct {

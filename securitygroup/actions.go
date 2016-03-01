@@ -4,6 +4,16 @@ import (
 	"github.com/magicshui/qingcloud-go"
 )
 
+type SECURITYGROUP struct {
+	*qingcloud.Client
+}
+
+func NewClient(clt *qingcloud.Client) *SECURITYGROUP {
+	return &SECURITYGROUP{
+		Client: clt,
+	}
+}
+
 type DescribeSecurityGroupsRequest struct {
 	SecurityGroupsN qingcloud.NumberedString
 
@@ -22,8 +32,9 @@ type DescribeSecurityGroupsResponse struct {
 // DescribeSecurityGroups
 // 获取一个或多个防火墙信息。
 // 可根据防火墙ID，名称作过滤条件，来获取防火墙列表。 如果不指定任何过滤条件，默认返回你所拥有的所有防火墙。 如果指定不存在的防火墙ID，或非法状态值，则会返回错误信息。
-func DescribeSecurityGroups(c *qingcloud.Client, params DescribeSecurityGroupsRequest) (DescribeSecurityGroupsResponse, error) {
+func (c *SECURITYGROUP) DescribeSecurityGroups(params DescribeSecurityGroupsRequest) (DescribeSecurityGroupsResponse, error) {
 	var result DescribeSecurityGroupsResponse
+	params.Verbose.Enum(0, 1)
 	err := c.Get("DescribeSecurityGroups", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
 }
@@ -40,7 +51,7 @@ type CreateSecurityGroupResponse struct {
 // 创建防火墙。防火墙可用于保障主机和路由器的网络安全。
 // 刚创建的防火墙不包含任何规则，即任何端口都是封闭的， 需要建立规则以打开相应的端口。
 // 青云为每个用户提供了一个缺省防火墙，为了方便用户使用， 缺省防火墙默认打开了下行 icmp 协议和 tcp 22 端口。
-func CreateSecurityGroup(c *qingcloud.Client, params CreateSecurityGroupRequest) (CreateSecurityGroupResponse, error) {
+func (c *SECURITYGROUP) CreateSecurityGroup(params CreateSecurityGroupRequest) (CreateSecurityGroupResponse, error) {
 	var result CreateSecurityGroupResponse
 	err := c.Get("CreateSecurityGroup", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -60,7 +71,7 @@ type DeleteSecurityGroupsResponse struct {
 // 要删除的防火墙已加载规则到主机，则需要先调用 ApplySecurityGroup 将其他防火墙的规则应用到对应主机，之后才能被删除。
 // 要删除的防火墙已加载规则到路由器，则需要先调用 ModifyRouterAttributes 并 UpdateRouters 将其他防火墙的规则应用到对应路由器，之后才能被删除。
 // 青云系统提供的缺省防火墙不能被删除。
-func DeleteSecurityGroups(c *qingcloud.Client, params DeleteSecurityGroupsRequest) (DeleteSecurityGroupsResponse, error) {
+func (c *SECURITYGROUP) DeleteSecurityGroups(params DeleteSecurityGroupsRequest) (DeleteSecurityGroupsResponse, error) {
 	var result DeleteSecurityGroupsResponse
 	err := c.Get("DeleteSecurityGroups", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -76,7 +87,7 @@ type ApplySecurityGroupResponse qingcloud.CommonResponse
 // 应用防火墙规则。当防火墙的规则发生改变后，新规则不会即刻生效 （可通过 is_applied 属性分辨），需要调用 ApplySecurityGroup 之后才生效。
 // 防火墙规则可通过 AddSecurityGroupRules, DeleteSecurityGroupRules, ModifySecurityGroupRuleAttributes 修改。
 // 如果请求参数中传递了 instances.n ，则表示将此防火墙的规则应用到对应的主机。 如果不传此参数，则会将最新规则更新到所有已应用此防火墙的主机。
-func ApplySecurityGroup(c *qingcloud.Client, params ApplySecurityGroupRequest) (ApplySecurityGroupResponse, error) {
+func (c *SECURITYGROUP) ApplySecurityGroup(params ApplySecurityGroupRequest) (ApplySecurityGroupResponse, error) {
 	var result ApplySecurityGroupResponse
 	err := c.Get("ApplySecurityGroup", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -95,7 +106,7 @@ type ModifySecurityGroupAttributesResponse struct {
 // ModifySecurityGroupAttributes
 // 修改防火墙的名称和描述。
 // 一次只能修改一个防火墙。
-func ModifySecurityGroupAttributes(c *qingcloud.Client, params ModifySecurityGroupAttributesRequest) (ModifySecurityGroupAttributesResponse, error) {
+func (c *SECURITYGROUP) ModifySecurityGroupAttributes(params ModifySecurityGroupAttributesRequest) (ModifySecurityGroupAttributesResponse, error) {
 	var result ModifySecurityGroupAttributesResponse
 	err := c.Get("ModifySecurityGroupAttributes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -117,7 +128,7 @@ type DescribeSecurityGroupRulesResponse struct {
 // DescribeSecurityGroupRules
 // 获取某个防火墙的规则信息。
 // 可根据防火墙ID，上行/下行，防火墙规则ID 作过滤条件，获取防火墙规则列表。 如果不指定任何过滤条件，默认返回你所拥有的所有防火墙的所有规则。
-func DescribeSecurityGroupRules(c *qingcloud.Client, params DescribeSecurityGroupRulesRequest) (DescribeSecurityGroupRulesResponse, error) {
+func (c *SECURITYGROUP) DescribeSecurityGroupRules(params DescribeSecurityGroupRulesRequest) (DescribeSecurityGroupRulesResponse, error) {
 	var result DescribeSecurityGroupRulesResponse
 	err := c.Get("DescribeSecurityGroupRules", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -151,7 +162,7 @@ type AddSecurityGroupRulesResponse struct {
 // val1：如果协议为 tcp 或 udp，此值表示起始端口。 如果协议为 icmp，此值表示 ICMP 类型。 具体类型可参见 ICMP 类型及代码
 // val2：如果协议为 tcp 或 udp，此值表示结束端口。 如果协议为 icmp，此值表示 ICMP 代码。 具体代码可参见 ICMP 类型及代码
 // val3：源IP
-func AddSecurityGroupRules(c *qingcloud.Client, params AddSecurityGroupRulesRequest) (AddSecurityGroupRulesResponse, error) {
+func (c *SECURITYGROUP) AddSecurityGroupRules(params AddSecurityGroupRulesRequest) (AddSecurityGroupRulesResponse, error) {
 	var result AddSecurityGroupRulesResponse
 	err := c.Get("AddSecurityGroupRules", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -167,7 +178,7 @@ type DeleteSecurityGroupRulesResponse struct {
 
 // DeleteSecurityGroupRules
 // 删除防火墙规则。
-func DeleteSecurityGroupRules(c *qingcloud.Client, params DeleteSecurityGroupRulesRequest) (DeleteSecurityGroupRulesResponse, error) {
+func (c *SECURITYGROUP) DeleteSecurityGroupRules(params DeleteSecurityGroupRulesRequest) (DeleteSecurityGroupRulesResponse, error) {
 	var result DeleteSecurityGroupRulesResponse
 	err := c.Get("DeleteSecurityGroupRules", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -191,7 +202,7 @@ type ModifySecurityGroupRuleAttributesResponse struct {
 
 // ModifySecurityGroupRuleAttributes
 // 修改防火墙规则的优先级。
-func ModifySecurityGroupRuleAttributes(c *qingcloud.Client, params ModifySecurityGroupRuleAttributesRequest) (ModifySecurityGroupRuleAttributesResponse, error) {
+func (c *SECURITYGROUP) ModifySecurityGroupRuleAttributes(params ModifySecurityGroupRuleAttributesRequest) (ModifySecurityGroupRuleAttributesResponse, error) {
 	var result ModifySecurityGroupRuleAttributesResponse
 	err := c.Get("ModifySecurityGroupRuleAttributes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -209,7 +220,7 @@ type CreateSecurityGroupSnapshotResponse struct {
 
 // CreateSecurityGroupSnapshot
 // 根据当前的防火墙规则创建一个备份, 用于随时回滚之前的防火墙规则。
-func CreateSecurityGroupSnapshot(c *qingcloud.Client, params CreateSecurityGroupSnapshotRequest) (CreateSecurityGroupSnapshotResponse, error) {
+func (c *SECURITYGROUP) CreateSecurityGroupSnapshot(params CreateSecurityGroupSnapshotRequest) (CreateSecurityGroupSnapshotResponse, error) {
 	var result CreateSecurityGroupSnapshotResponse
 	err := c.Get("CreateSecurityGroupSnapshot", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -230,7 +241,7 @@ type DescribeSecurityGroupSnapshotsResponse struct {
 
 // DescribeSecurityGroupSnapshots
 // 获取某个防火墙的备份信息。
-func DescribeSecurityGroupSnapshots(c *qingcloud.Client, params DescribeSecurityGroupSnapshotsRequest) (DescribeSecurityGroupSnapshotsResponse, error) {
+func (c *SECURITYGROUP) DescribeSecurityGroupSnapshots(params DescribeSecurityGroupSnapshotsRequest) (DescribeSecurityGroupSnapshotsResponse, error) {
 	var result DescribeSecurityGroupSnapshotsResponse
 	err := c.Get("DescribeSecurityGroupSnapshots", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -247,7 +258,7 @@ type DeleteSecurityGroupSnapshotsResponse struct {
 
 // DeleteSecurityGroupSnapshots
 // 删除防火墙备份。
-func DeleteSecurityGroupSnapshots(c *qingcloud.Client, params DeleteSecurityGroupSnapshotsRequest) (DeleteSecurityGroupSnapshotsResponse, error) {
+func (c *SECURITYGROUP) DeleteSecurityGroupSnapshots(params DeleteSecurityGroupSnapshotsRequest) (DeleteSecurityGroupSnapshotsResponse, error) {
 	var result DeleteSecurityGroupSnapshotsResponse
 	err := c.Get("DeleteSecurityGroupSnapshots", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -265,7 +276,7 @@ type RollbackSecurityGroupResponse struct {
 
 // RollbackSecurityGroup
 // 使用防火墙备份回滚。
-func RollbackSecurityGroup(c *qingcloud.Client, params RollbackSecurityGroupRequest) (RollbackSecurityGroupResponse, error) {
+func (c *SECURITYGROUP) RollbackSecurityGroup(params RollbackSecurityGroupRequest) (RollbackSecurityGroupResponse, error) {
 	var result RollbackSecurityGroupResponse
 	err := c.Get("RollbackSecurityGroup", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
