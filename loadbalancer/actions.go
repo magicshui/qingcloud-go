@@ -339,7 +339,7 @@ type CreateLoadBalancerPolicyRequest struct {
 }
 type CreateLoadBalancerPolicyResponse struct {
 	// TODO: 文档又错误
-	LoadbalancerPolicyId string `json:"loadbalancer_poicy_id"`
+	LoadbalancerPolicyId string `json:"loadbalancer_policy_id"`
 	qingcloud.CommonResponse
 }
 
@@ -420,7 +420,7 @@ type AddLoadBalancerPolicyRulesRequest struct {
 	LoadbalancerPolicy               qingcloud.String
 	RulesNLoadbalancerPolicyRuleName qingcloud.NumberedString
 	RulesNRuleType                   qingcloud.NumberedString
-	PolicyRulesNVal                  qingcloud.NumberedString
+	RulesNVal                        qingcloud.NumberedString
 }
 type AddLoadBalancerPolicyRulesResponse struct {
 	qingcloud.CommonResponse
