@@ -5,31 +5,40 @@ import (
 )
 
 type Loadbalancer struct {
-	Status           string        `json:"status"`
-	IsApplied        int           `json:"is_applied"`
-	Description      interface{}   `json:"description"`
-	LoadbalancerName string        `json:"loadbalancer_name"`
-	TransitionStatus string        `json:"transition_status"`
-	Eips             []interface{} `json:"eips"`
-	Listeners        []struct {
-		Forwardfor               int         `json:"forwardfor"`
-		LoadbalancerListenerID   string      `json:"loadbalancer_listener_id"`
-		BalanceMode              string      `json:"balance_mode"`
-		ListenerProtocol         string      `json:"listener_protocol"`
-		BackendProtocol          string      `json:"backend_protocol"`
-		HealthyCheckMethod       string      `json:"healthy_check_method"`
-		SessionSticky            string      `json:"session_sticky"`
-		LoadbalancerListenerName interface{} `json:"loadbalancer_listener_name"`
-		Controller               string      `json:"controller"`
-		CreateTime               time.Time   `json:"create_time"`
-		HealthyCheckOption       string      `json:"healthy_check_option"`
-		LoadbalancerID           string      `json:"loadbalancer_id"`
-		ListenerPort             int         `json:"listener_port"`
+	Status           string `json:"status"`
+	IsApplied        int    `json:"is_applied"`
+	Description      string `json:"description"`
+	LoadbalancerName string `json:"loadbalancer_name"`
+	TransitionStatus string `json:"transition_status"`
+	Eips             []struct {
+		EipId   string `json:"eip_id"`
+		EipName string `json:"eip_name"`
+		EipAddr string `json:"eip_addr"`
+	} `json:"eips"`
+	Listeners []struct {
+		Forwardfor               int       `json:"forwardfor"`
+		LoadbalancerListenerID   string    `json:"loadbalancer_listener_id"`
+		BalanceMode              string    `json:"balance_mode"`
+		ListenerProtocol         string    `json:"listener_protocol"`
+		BackendProtocol          string    `json:"backend_protocol"`
+		HealthyCheckMethod       string    `json:"healthy_check_method"`
+		SessionSticky            string    `json:"session_sticky"`
+		LoadbalancerListenerName string    `json:"loadbalancer_listener_name"`
+		Controller               string    `json:"controller"`
+		CreateTime               time.Time `json:"create_time"`
+		HealthyCheckOption       string    `json:"healthy_check_option"`
+		LoadbalancerID           string    `json:"loadbalancer_id"`
+		ListenerPort             int       `json:"listener_port"`
 	} `json:"listeners"`
 	CreateTime      time.Time `json:"create_time"`
 	StatusTime      time.Time `json:"status_time"`
 	SecurityGroupID string    `json:"security_group_id"`
 	LoadbalancerID  string    `json:"loadbalancer_id"`
+	Vxnet           struct {
+		VxnetName string `json:"vxnet_name"`
+		PrivateIP string `json:"private_ip"`
+		VxnetID   string `json:"vxnet_id"`
+	} `json:"vxnet"`
 }
 
 type LoadbalancerListener struct {

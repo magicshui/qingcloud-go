@@ -5,10 +5,10 @@ import (
 )
 
 type Router struct {
-	RouterID    string      `json:"router_id"`
-	Status      string      `json:"status"`
-	IsApplied   int         `json:"is_applied"`
-	Description interface{} `json:"description"`
+	RouterID    string `json:"router_id"`
+	Status      string `json:"status"`
+	IsApplied   int    `json:"is_applied"`
+	Description string `json:"description"`
 	Eip         struct {
 		EipName string `json:"eip_name"`
 		EipID   string `json:"eip_id"`
@@ -28,15 +28,20 @@ type Router struct {
 }
 
 type RouterStatic struct {
-	RouterID       string    `json:"router_id"`
-	VxnetID        string    `json:"vxnet_id"`
-	StaticType     int       `json:"static_type"`
-	RouterStaticID string    `json:"router_static_id"`
-	CreateTime     time.Time `json:"create_time"`
-	Val3           string    `json:"val3"`
-	Val2           string    `json:"val2"`
-	Val1           string    `json:"val1"`
-	Val4           string    `json:"val4"`
+	RouterID         string    `json:"router_id"`
+	VxnetID          string    `json:"vxnet_id"`
+	RouterStaticID   string    `json:"router_static_id"`
+	StaticType       int       `json:"static_type"`
+	RouterStaticName string    `json:"router_static_name"`
+	Disabled         int       `json:"disabled"`
+	Owner            string    `json:"owner"`
+	CreateTime       time.Time `json:"create_time"`
+	Val3             string    `json:"val3"`
+	Val2             string    `json:"val2"`
+	Val1             string    `json:"val1"`
+	Val6             string    `json:"val6"`
+	Val5             string    `json:"val5"`
+	Val4             string    `json:"val4"`
 }
 
 type RouterVxnet struct {

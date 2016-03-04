@@ -5,35 +5,33 @@ import (
 )
 
 type Instance struct {
-	VcpusCurrent int      `json:"vcpus_current"`
-	InstanceID   string   `json:"instance_id"`
-	VolumeIds    []string `json:"volume_ids"`
-	Vxnets       []struct {
+	Vxnets []struct {
 		VxnetName string `json:"vxnet_name"`
 		VxnetType int    `json:"vxnet_type"`
 		VxnetID   string `json:"vxnet_id"`
 		NicID     string `json:"nic_id"`
 		PrivateIP string `json:"private_ip"`
 	} `json:"vxnets"`
-	Eip struct {
-		EipID     string `json:"eip_id"`
+	MemoryCurrent int `json:"memory_current"`
+	Eip           struct {
 		EipAddr   string `json:"eip_addr"`
-		Bandwidth string `json:"bandwidth"`
+		Bandwidth int    `json:"bandwidth"`
+		EipID     string `json:"eip_id"`
 	} `json:"eip"`
-	MemoryCurrent    int         `json:"memory_current"`
-	SubCode          int         `json:"sub_code"`
-	TransitionStatus string      `json:"transition_status"`
-	InstanceName     string      `json:"instance_name"`
-	InstanceType     string      `json:"instance_type"`
-	CreateTime       time.Time   `json:"create_time"`
-	Status           string      `json:"status"`
-	Description      interface{} `json:"description"`
-	SecurityGroup    struct {
-		IsDefault       int    `json:"is_default"`
-		SecurityGroupID string `json:"security_group_id"`
-	} `json:"security_group"`
-	StatusTime time.Time `json:"status_time"`
-	Image      struct {
+	Extra struct {
+		NoRestrict int    `json:"no_restrict"`
+		NicMqueue  int    `json:"nic_mqueue"`
+		NoLimit    int    `json:"no_limit"`
+		CPUModel   string `json:"cpu_model"`
+		Slots      struct {
+			I52541B2ACe6B string `json:"i|52:54:1b:2a:ce:6b"`
+			DVolCxj3K1Ea  string `json:"d|vol-cxj3k1ea"`
+		} `json:"slots"`
+		BootDev  string `json:"boot_dev"`
+		BlockBus string `json:"block_bus"`
+	} `json:"extra"`
+	Image struct {
+		UIType        string `json:"ui_type"`
 		ProcessorType string `json:"processor_type"`
 		Platform      string `json:"platform"`
 		ImageSize     int    `json:"image_size"`
@@ -42,5 +40,31 @@ type Instance struct {
 		OsFamily      string `json:"os_family"`
 		Provider      string `json:"provider"`
 	} `json:"image"`
-	KeypairIds []string `json:"keypair_ids"`
+	CreateTime          time.Time     `json:"create_time"`
+	AlarmStatus         string        `json:"alarm_status"`
+	Owner               string        `json:"owner"`
+	KeypairIds          []string      `json:"keypair_ids"`
+	VcpusCurrent        int           `json:"vcpus_current"`
+	InstanceID          string        `json:"instance_id"`
+	SubCode             int           `json:"sub_code"`
+	InstanceClass       int           `json:"instance_class"`
+	StatusTime          time.Time     `json:"status_time"`
+	Status              string        `json:"status"`
+	Description         string        `json:"description"`
+	CPUTopology         string        `json:"cpu_topology"`
+	Tags                []interface{} `json:"tags"`
+	TransitionStatus    string        `json:"transition_status"`
+	VolumeIds           []string      `json:"volume_ids"`
+	LastestSnapshotTime string        `json:"lastest_snapshot_time"`
+	InstanceName        string        `json:"instance_name"`
+	InstanceType        string        `json:"instance_type"`
+	DNSAliases          []interface{} `json:"dns_aliases"`
+	Volumes             []struct {
+		Device   string `json:"device"`
+		VolumeID string `json:"volume_id"`
+	} `json:"volumes"`
+	SecurityGroup struct {
+		IsDefault       int    `json:"is_default"`
+		SecurityGroupID string `json:"security_group_id"`
+	} `json:"security_group"`
 }

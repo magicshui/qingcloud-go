@@ -79,6 +79,8 @@ func (c *Client) Get(action string, params Params, response interface{}) error {
 		return errors.New(errCode.Message)
 	}
 
+	log.Printf("%s", string(result))
+
 	err = json.Unmarshal(result, &response)
 	if err != nil {
 		return err

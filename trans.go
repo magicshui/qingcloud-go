@@ -25,6 +25,7 @@ func convertName(s string, number ...string) string {
 	if s[lastPos:] != "" {
 		words = append(words, s[lastPos:])
 	}
+
 	for k, word := range words {
 		if k > 0 {
 			result += "_"
@@ -33,7 +34,11 @@ func convertName(s string, number ...string) string {
 	}
 	if len(number) == 1 {
 		result = strings.Replace(result, "_n_", "."+number[0]+".", -1)
-		result = strings.Replace(result, "_n", "."+number[0], -1)
+		// 只有在最后的时候才需要替换
+		if strings.Index(result, "_n") == len(result)-2 {
+			result = strings.Replace(result, "_n", "."+number[0], -1)
+		}
+
 	}
 	return result
 }
@@ -58,11 +63,19 @@ func convertITypeToParams(data reflect.Value) Params {
 			var p = Param{}
 			p.Name = convertName(fieldName)
 			p.Value = el.Interface().(String).value
-			if p.Value == "" {
+			if p.Value == "" && !el.Interface().(String).write {
 				continue
 			}
 			params = append(params, &p)
-
+		case reflect.TypeOf(NumberedInteger{}):
+			w := 1
+			for m, _ := range el.Interface().(NumberedInteger).values {
+				var p = Param{}
+				p.Name = convertName(fieldName, strconv.Itoa(w))
+				p.Value = m
+				w += 1
+				params = append(params, &p)
+			}
 		case reflect.TypeOf(NumberedString{}):
 			w := 1
 			for m, _ := range el.Interface().(NumberedString).values {

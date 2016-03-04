@@ -41,6 +41,44 @@ func (s *String) String() string {
 	return s.value
 }
 
+// TODO 实现这个类型
+type NumberedInteger struct {
+	values map[int64]bool
+	enums  map[int64]bool
+	write  bool
+}
+
+func (s *NumberedInteger) Add(t ...int64) {
+	if s.enums == nil {
+		s.enums = make(map[int64]bool)
+	}
+	if s.values == nil {
+		s.values = make(map[int64]bool)
+	}
+	for _, o := range t {
+		if len(s.enums) != 0 {
+			if _, ok := s.enums[o]; ok {
+				s.values[o] = true
+			}
+		} else {
+			s.values[o] = true
+		}
+	}
+}
+func (s *NumberedInteger) Enum(e ...int64) {
+	if s.enums == nil {
+		s.enums = make(map[int64]bool)
+	}
+	for k, _ := range s.values {
+		if _, ok := s.enums[k]; !ok {
+			delete(s.values, k)
+		}
+	}
+	if len(s.values) == 0 {
+		s.write = false
+	}
+}
+
 type NumberedString struct {
 	values map[string]bool
 	enums  map[string]bool
@@ -108,35 +146,6 @@ func (s *Integer) Set(t int) {
 func (s *Integer) Enum(e ...int) {
 	if s.enums == nil {
 		s.enums = make(map[int]bool)
-	}
-	for _, o := range e {
-		s.enums[o] = true
-	}
-}
-
-// TODO 实现这个类型
-type NumberedInteger struct {
-	values map[int64]bool
-	enums  map[int64]bool
-}
-
-func (s *NumberedInteger) Add(t ...int64) {
-	if s.values == nil {
-		s.values = make(map[int64]bool)
-	}
-	for _, o := range t {
-		if len(s.enums) != 0 {
-			if _, ok := s.enums[o]; ok {
-				s.values[o] = true
-			}
-		} else {
-			s.values[o] = true
-		}
-	}
-}
-func (s *NumberedInteger) Enum(e ...int64) {
-	if s.enums == nil {
-		s.enums = make(map[int64]bool)
 	}
 	for _, o := range e {
 		s.enums[o] = true
