@@ -26,6 +26,7 @@ type SecurityGroupRule struct {
 	SecurityGroupRuleID string `json:"security_group_rule_id"`
 	Val2                string `json:"val2"`
 	Val1                string `json:"val1"`
+	Val3                string `json:"val3"`
 	Direction           int    `json:"direction"`
 }
 
