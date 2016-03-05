@@ -94,6 +94,14 @@ func (c *Client) Post(action string, params Params, response interface{}) error 
 	if err != nil {
 		return err
 	}
+	var errCode CommonResponse
+	json.Unmarshal(result, &errCode)
+	if errCode.RetCode != 0 {
+		return errors.New(errCode.Message)
+	}
+
+	log.Printf("%s", string(result))
+
 	err = json.Unmarshal(result, &response)
 	if err != nil {
 		return err
@@ -112,11 +120,12 @@ func (c *Client) post(action string, params Params) ([]byte, error) {
 	c.addTimeStamp()
 	_url, _sig := c.getUrl("Post")
 	url := fmt.Sprintf("https://api.qingcloud.com/iaas/?%v&signature=%v", _url, _sig)
-	http.Post(url, "application/json;utf-8", nil)
-	res, err := http.Get(url)
+	log.Printf("%s", url)
+	res, err := http.Post(url, "application/json;utf-8", nil)
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	return ioutil.ReadAll(res.Body)
 }
 

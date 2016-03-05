@@ -29,3 +29,5 @@ test
 
 */*_test.go
 
+*.txt
+*.zip
