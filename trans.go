@@ -85,6 +85,13 @@ func convertITypeToParams(data reflect.Value) Params {
 				w += 1
 				params = append(params, &p)
 			}
+		case reflect.TypeOf(Dict{}):
+			for m, _ := range el.Interface().(Dict).values {
+				var p = Param{}
+				p.Name = convertName(fieldName)
+				p.Value = m
+				params = append(params, &p)
+			}
 		case reflect.TypeOf(Array{}):
 		default:
 			continue

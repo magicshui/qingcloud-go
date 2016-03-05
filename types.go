@@ -152,6 +152,17 @@ func (s *Integer) Enum(e ...int) {
 	}
 }
 
+type Dict struct {
+	values []map[string]interface{}
+}
+
+func (c *Dict) Add(t map[string]interface{}) {
+	if len(c.values) == 0 {
+		c.values = make([]map[string]interface{}, 0)
+	}
+	c.values = append(c.values, t)
+}
+
 // TODO 实现这个类型
 
 type Array struct{}
