@@ -4,6 +4,16 @@ import (
 	"github.com/magicshui/qingcloud-go"
 )
 
+type MONGO struct {
+	*qingcloud.Client
+}
+
+func NewClient(clt *qingcloud.Client) *MONGO {
+	return &MONGO{
+		Client: clt,
+	}
+}
+
 type DescribeMongoNodesRequest struct {
 	Mongo  qingcloud.String
 	Offset qingcloud.Integer
@@ -17,7 +27,7 @@ type DescribeMongoNodesResponse struct {
 
 // DescribeMongoNodes 获取 Mongo 节点相关的信息。
 // 获取指定 Mongo 的所有节点信息。
-func DescribeMongoNodes(c *qingcloud.Client, params DescribeMongoNodesRequest) (DescribeMongoNodesResponse, error) {
+func (c *MONGO) DescribeMongoNodes(params DescribeMongoNodesRequest) (DescribeMongoNodesResponse, error) {
 	var result DescribeMongoNodesResponse
 	err := c.Get("DescribeMongoNodes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -35,7 +45,7 @@ type DescribeMongoParametersResponse struct {
 }
 
 // DescribeMongoParameters 获取指定 Mongo 的配置信息。
-func DescribeMongoParameters(c *qingcloud.Client, params DescribeMongoParametersRequest) (DescribeMongoParametersResponse, error) {
+func (c *MONGO) DescribeMongoParameters(params DescribeMongoParametersRequest) (DescribeMongoParametersResponse, error) {
 	var result DescribeMongoParametersResponse
 	err := c.Get("DescribeMongoParameters", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -52,7 +62,7 @@ type ResizeMongosResponse struct {
 }
 
 // ResizeMongos 扩容指定的 Mongo 集群。
-func ResizeMongos(c *qingcloud.Client, params ResizeMongosRequest) (ResizeMongosResponse, error) {
+func (c *MONGO) ResizeMongos(params ResizeMongosRequest) (ResizeMongosResponse, error) {
 	var result ResizeMongosResponse
 	err := c.Get("ResizeMongos", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -74,7 +84,7 @@ type CreateMongoResponse struct {
 }
 
 // CreateMongo 创建 Mongo 集群。
-func CreateMongo(c *qingcloud.Client, params CreateMongoRequest) (CreateMongoResponse, error) {
+func (c *MONGO) CreateMongo(params CreateMongoRequest) (CreateMongoResponse, error) {
 	var result CreateMongoResponse
 	err := c.Get("CreateMongo", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -89,7 +99,7 @@ type StopMongosResponse struct {
 }
 
 // StopMongos 关闭指定的 Mongo 集群。
-func StopMongos(c *qingcloud.Client, params StopMongosRequest) (StopMongosResponse, error) {
+func (c *MONGO) StopMongos(params StopMongosRequest) (StopMongosResponse, error) {
 	var result StopMongosResponse
 	err := c.Get("StopMongos", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -104,7 +114,7 @@ type StartMongosResponse struct {
 }
 
 // StartMongos 启动指定的 Mongo 集群。
-func StartMongos(c *qingcloud.Client, params StartMongosRequest) (StartMongosResponse, error) {
+func (c *MONGO) StartMongos(params StartMongosRequest) (StartMongosResponse, error) {
 	var result StartMongosResponse
 	err := c.Get("StartMongos", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -128,7 +138,7 @@ type DescribeMongosResponse struct {
 
 // DescribeMongos 获取 Mongo 集群相关的信息。
 // 可根据 Mongo ID，状态，Mongo 名称作过滤条件，来获取 Mongo 集群列表。 如果不指定任何过滤条件，默认返回你所拥有的所有 Mongo 集群。 如果指定不存在的 Mongo ID，或非法状态值，则会返回错误信息。
-func DescribeMongos(c *qingcloud.Client, params DescribeMongosRequest) (DescribeMongosResponse, error) {
+func (c *MONGO) DescribeMongos(params DescribeMongosRequest) (DescribeMongosResponse, error) {
 	var result DescribeMongosResponse
 	err := c.Get("DescribeMongos", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -143,7 +153,7 @@ type DeleteMongosResponse struct {
 }
 
 // DeleteMongos 删除指定 Mongo 集群。
-func DeleteMongos(c *qingcloud.Client, params DeleteMongosRequest) (DeleteMongosResponse, error) {
+func (c *MONGO) DeleteMongos(params DeleteMongosRequest) (DeleteMongosResponse, error) {
 	var result DeleteMongosResponse
 	err := c.Get("DeleteMongos", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -162,7 +172,7 @@ type CreateMongoFromSnapshotResponse struct {
 }
 
 // CreateMongoFromSnapshot 从指定备份创建一个新的 Mongo 集群。
-func CreateMongoFromSnapshot(c *qingcloud.Client, params CreateMongoFromSnapshotRequest) (CreateMongoFromSnapshotResponse, error) {
+func (c *MONGO) CreateMongoFromSnapshot(params CreateMongoFromSnapshotRequest) (CreateMongoFromSnapshotResponse, error) {
 	var result CreateMongoFromSnapshotResponse
 	err := c.Get("CreateMongoFromSnapshot", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -179,7 +189,7 @@ type ChangeMongoVxnetResponse struct {
 }
 
 // ChangeMongoVxnet 变更 Mongo 集群的私有网络，即离开原有私有网络并加入新的私有网络。
-func ChangeMongoVxnet(c *qingcloud.Client, params ChangeMongoVxnetRequest) (ChangeMongoVxnetResponse, error) {
+func (c *MONGO) ChangeMongoVxnet(params ChangeMongoVxnetRequest) (ChangeMongoVxnetResponse, error) {
 	var result ChangeMongoVxnetResponse
 	err := c.Get("ChangeMongoVxnet", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -196,7 +206,7 @@ type AddMongoInstancesResponse struct {
 }
 
 // AddMongoInstances 添加新节点到指定 Mongo 集群。
-func AddMongoInstances(c *qingcloud.Client, params AddMongoInstancesRequest) (AddMongoInstancesResponse, error) {
+func (c *MONGO) AddMongoInstances(params AddMongoInstancesRequest) (AddMongoInstancesResponse, error) {
 	var result AddMongoInstancesResponse
 	err := c.Get("AddMongoInstances", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -212,7 +222,7 @@ type RemoveMongoInstancesResponse struct {
 }
 
 // RemoveMongoInstances 添加新节点到指定 Mongo 集群。
-func RemoveMongoInstances(c *qingcloud.Client, params RemoveMongoInstancesRequest) (RemoveMongoInstancesResponse, error) {
+func (c *MONGO) RemoveMongoInstances(params RemoveMongoInstancesRequest) (RemoveMongoInstancesResponse, error) {
 	var result RemoveMongoInstancesResponse
 	err := c.Get("RemoveMongoInstances", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -230,7 +240,7 @@ type ModifyMongoAttributesResponse struct {
 }
 
 // ModifyMongoAttributes 修改 Mongo 集群相关属性值。
-func ModifyMongoAttributes(c *qingcloud.Client, params ModifyMongoAttributesRequest) (ModifyMongoAttributesResponse, error) {
+func (c *MONGO) ModifyMongoAttributes(params ModifyMongoAttributesRequest) (ModifyMongoAttributesResponse, error) {
 	var result ModifyMongoAttributesResponse
 	err := c.Get("ModifyMongoAttributes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -246,7 +256,7 @@ type ModifyMongoInstancesResponse struct {
 }
 
 // ModifyMongoInstances 修改 Mongo 集群相关属性值。
-func ModifyMongoInstances(c *qingcloud.Client, params ModifyMongoInstancesRequest) (ModifyMongoInstancesResponse, error) {
+func (c *MONGO) ModifyMongoInstances(params ModifyMongoInstancesRequest) (ModifyMongoInstancesResponse, error) {
 	var result ModifyMongoInstancesResponse
 	err := c.Get("ModifyMongoInstances", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -266,7 +276,7 @@ type GetMongoMonitorResponse struct {
 }
 
 // GetMongoMonitor 获取指定 Mongo 节点的监控信息。
-func GetMongoMonitor(c *qingcloud.Client, params GetMongoMonitorRequest) (GetMongoMonitorResponse, error) {
+func (c *MONGO) GetMongoMonitor(params GetMongoMonitorRequest) (GetMongoMonitorResponse, error) {
 	var result GetMongoMonitorResponse
 	err := c.Get("GetMongoMonitor", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
