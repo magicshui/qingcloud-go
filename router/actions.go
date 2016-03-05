@@ -291,7 +291,7 @@ func (c *ROUTER) AddRouterStaticEntries(params AddRouterStaticEntriesRequest) (A
 }
 
 type DeleteRouterStaticEntriesReqeust struct {
-	EntriesNVal1 qingcloud.NumberedString
+	RouterStaticEntriesN qingcloud.NumberedString
 }
 type DeleteRouterStaticEntriesResponse struct {
 	RouterStaticEntriesN qingcloud.NumberedString

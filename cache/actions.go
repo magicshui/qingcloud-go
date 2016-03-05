@@ -4,6 +4,16 @@ import (
 	"github.com/magicshui/qingcloud-go"
 )
 
+type CACHE struct {
+	*qingcloud.Client
+}
+
+func NewClient(clt *qingcloud.Client) *CACHE {
+	return &CACHE{
+		Client: clt,
+	}
+}
+
 type DescribeCachesRequest struct {
 	CachesN    qingcloud.NumberedString
 	StatusN    qingcloud.NumberedString
@@ -22,7 +32,7 @@ type DescribeCachesResponse struct {
 
 // DescribeCaches 获取一个或多个缓存服务。
 // 可根据缓存服务ID，状态，缓存服务名称作过滤条件，来获取缓存服务列表。 如果不指定任何过滤条件，默认返回你的所有缓存服务。
-func DescribeCaches(c *qingcloud.Client, params DescribeCachesRequest) (DescribeCachesResponse, error) {
+func (c *CACHE) DescribeCaches(params DescribeCachesRequest) (DescribeCachesResponse, error) {
 	var result DescribeCachesResponse
 	err := c.Get("DescribeCaches", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -48,7 +58,7 @@ type CreateCacheResponse struct {
 
 // CreateCache
 // 创建一个缓存服务。目前缓存服务只能运行于私有网络中，在创建缓存之前，您需要有一个已连接到路由器的私有网络。
-func CreateCache(c *qingcloud.Client, params CreateCacheRequest) (CreateCacheResponse, error) {
+func (c *CACHE) CreateCache(params CreateCacheRequest) (CreateCacheResponse, error) {
 	var result CreateCacheResponse
 	err := c.Get("CreateCache", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -61,7 +71,7 @@ type StopCachesResponse qingcloud.CommonResponse
 
 // StopCaches
 // 关闭一台或多台缓存服务。该操作将关闭缓存服务的所有缓存节点。
-func StopCaches(c *qingcloud.Client, params StopCachesRequest) (StopCachesResponse, error) {
+func (c *CACHE) StopCaches(params StopCachesRequest) (StopCachesResponse, error) {
 	var result StopCachesResponse
 	err := c.Get("StopCaches", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -74,7 +84,7 @@ type StartCachesResponse qingcloud.CommonResponse
 
 // StartCaches
 // 启动一台或多台缓存服务。
-func StartCaches(c *qingcloud.Client, params StartCachesRequest) (StartCachesResponse, error) {
+func (c *CACHE) StartCaches(params StartCachesRequest) (StartCachesResponse, error) {
 	var result StartCachesResponse
 	err := c.Get("StartCaches", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -87,7 +97,7 @@ type RestartCachesResponse qingcloud.CommonResponse
 
 // RestartCaches
 // 重启一台或多台缓存服务。该操作将重启缓存服务的所有缓存节点。
-func RestartCaches(c *qingcloud.Client, params RestartCachesRequest) (RestartCachesResponse, error) {
+func (c *CACHE) RestartCaches(params RestartCachesRequest) (RestartCachesResponse, error) {
 	var result RestartCachesResponse
 	err := c.Get("RestartCaches", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -100,7 +110,7 @@ type DeleteCachesResponse qingcloud.CommonResponse
 
 // DeleteCaches
 // 删除一台或多台缓存服务。
-func DeleteCaches(c *qingcloud.Client, params DeleteCachesRequest) (DeleteCachesResponse, error) {
+func (c *CACHE) DeleteCaches(params DeleteCachesRequest) (DeleteCachesResponse, error) {
 	var result DeleteCachesResponse
 	err := c.Get("DeleteCaches", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -114,7 +124,7 @@ type ResizeCachesResponse qingcloud.CommonResponse
 
 // ResizeCaches
 // 修改缓存服务节点内存大小。缓存服务状态必须是关闭的 stopped ，不然会返回错误。
-func ResizeCaches(c *qingcloud.Client, params ResizeCachesRequest) (ResizeCachesResponse, error) {
+func (c *CACHE) ResizeCaches(params ResizeCachesRequest) (ResizeCachesResponse, error) {
 	var result ResizeCachesResponse
 	err := c.Get("ResizeCaches", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -129,7 +139,7 @@ type UpdateCacheResponse qingcloud.CommonResponse
 
 // UpdateCache
 // 更新缓存服务的配置，例如更新缓存节点 IP 地址。
-func UpdateCache(c *qingcloud.Client, params UpdateCacheRequest) (UpdateCacheResponse, error) {
+func (c *CACHE) UpdateCache(params UpdateCacheRequest) (UpdateCacheResponse, error) {
 	var result UpdateCacheResponse
 	err := c.Get("UpdateCache", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -146,7 +156,7 @@ type ChangeCacheVxnetResponse qingcloud.CommonResponse
 
 // ChangeCacheVxnet
 // 变更缓存服务的私有网络，即离开原有私有网络并加入新的私有网络。
-func ChangeCacheVxnet(c *qingcloud.Client, params ChangeCacheVxnetRequest) (ChangeCacheVxnetResponse, error) {
+func (c *CACHE) ChangeCacheVxnet(params ChangeCacheVxnetRequest) (ChangeCacheVxnetResponse, error) {
 	var result ChangeCacheVxnetResponse
 	err := c.Get("ChangeCacheVxnet", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -162,7 +172,7 @@ type ModifyCacheAttributesResponse qingcloud.CommonResponse
 
 // ModifyCacheAttributes
 // 修改一台缓存服务的名称和描述。
-func ModifyCacheAttributes(c *qingcloud.Client, params ModifyCacheAttributesRequest) (ModifyCacheAttributesResponse, error) {
+func (c *CACHE) ModifyCacheAttributes(params ModifyCacheAttributesRequest) (ModifyCacheAttributesResponse, error) {
 	var result ModifyCacheAttributesResponse
 	err := c.Get("ModifyCacheAttributes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -186,7 +196,7 @@ type DescribeCacheNodesResponse struct {
 
 // DescribeCacheNodes 获取一个或多个缓存服务节点信息。
 // 可根据缓存服务ID，缓存服务节点ID，状态，缓存服务节点名称作过滤条件，来获取缓存服务节点列表。 如果不指定任何过滤条件，默认返回你的所有缓存服务节点。
-func DescribeCacheNodes(c *qingcloud.Client, params DescribeCacheNodesRequest) (DescribeCacheNodesResponse, error) {
+func (c *CACHE) DescribeCacheNodes(params DescribeCacheNodesRequest) (DescribeCacheNodesResponse, error) {
 	var result DescribeCacheNodesResponse
 	err := c.Get("DescribeCacheNodes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -206,7 +216,7 @@ type AddCacheNodesResponse struct {
 
 // AddCacheNodes
 // 给缓存服务添加一个或多个缓存节点。
-func AddCacheNodes(c *qingcloud.Client, params AddCacheNodesRequest) (AddCacheNodesResponse, error) {
+func (c *CACHE) AddCacheNodes(params AddCacheNodesRequest) (AddCacheNodesResponse, error) {
 	var result AddCacheNodesResponse
 	err := c.Get("AddCacheNodes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -219,7 +229,7 @@ type DeleteCacheNodesRequest struct {
 type DeleteCacheNodesResponse qingcloud.CommonResponse
 
 // DeleteCacheNodes 删除缓存服务节点。
-func DeleteCacheNodes(c *qingcloud.Client, params DeleteCacheNodesRequest) (DeleteCacheNodesResponse, error) {
+func (c *CACHE) DeleteCacheNodes(params DeleteCacheNodesRequest) (DeleteCacheNodesResponse, error) {
 	var result DeleteCacheNodesResponse
 	err := c.Get("DeleteCacheNodes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -233,7 +243,7 @@ type RestartCacheNodesResponse qingcloud.CommonResponse
 
 // RestartCacheNodes
 // 重启一台或多台缓存服务节点。
-func RestartCacheNodes(c *qingcloud.Client, params RestartCacheNodesRequest) (RestartCacheNodesResponse, error) {
+func (c *CACHE) RestartCacheNodes(params RestartCacheNodesRequest) (RestartCacheNodesResponse, error) {
 	var result RestartCacheNodesResponse
 	err := c.Get("RestartCacheNodes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -247,7 +257,7 @@ type ModifyCacheNodeAttributesResponse qingcloud.CommonResponse
 
 // ModifyCacheNodeAttributes
 // 修改一台缓存服务节点的名称。
-func ModifyCacheNodeAttributes(c *qingcloud.Client, params ModifyCacheNodeAttributesRequest) (ModifyCacheNodeAttributesResponse, error) {
+func (c *CACHE) ModifyCacheNodeAttributes(params ModifyCacheNodeAttributesRequest) (ModifyCacheNodeAttributesResponse, error) {
 	var result ModifyCacheNodeAttributesResponse
 	err := c.Get("ModifyCacheNodeAttributes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -268,7 +278,7 @@ type CreateCacheFromSnapshotResponse qingcloud.CommonResponse
 
 // CreateCacheFromSnapshot
 // 由备份节点创建一个新的缓存服务。
-func CreateCacheFromSnapshot(c *qingcloud.Client, params CreateCacheFromSnapshotRequest) (CreateCacheFromSnapshotResponse, error) {
+func (c *CACHE) CreateCacheFromSnapshot(params CreateCacheFromSnapshotRequest) (CreateCacheFromSnapshotResponse, error) {
 	var result CreateCacheFromSnapshotResponse
 	err := c.Get("CreateCacheFromSnapshot", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -291,7 +301,7 @@ type DescribeCacheParameterGroupsResponse struct {
 
 // DescribeCacheParameterGroups 获取一个或多个缓存配置组信息。
 // 可根据缓存配置组ID，缓存配置组名称作过滤条件，来获取缓存配置组列表。 如果不指定任何过滤条件，默认返回你的所有缓存配置组。
-func DescribeCacheParameterGroups(c *qingcloud.Client, params DescribeCacheParameterGroupsRequest) (DescribeCacheParameterGroupsResponse, error) {
+func (c *CACHE) DescribeCacheParameterGroups(params DescribeCacheParameterGroupsRequest) (DescribeCacheParameterGroupsResponse, error) {
 	var result DescribeCacheParameterGroupsResponse
 	err := c.Get("DescribeCacheParameterGroups", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -308,7 +318,7 @@ type CreateCacheParameterGroupResponse struct {
 
 // CreateCacheParameterGroup
 // 创建一个缓存服务配置组。
-func CreateCacheParameterGroup(c *qingcloud.Client, params CreateCacheParameterGroupRequest) (CreateCacheParameterGroupResponse, error) {
+func (c *CACHE) CreateCacheParameterGroup(params CreateCacheParameterGroupRequest) (CreateCacheParameterGroupResponse, error) {
 	var result CreateCacheParameterGroupResponse
 	err := c.Get("CreateCacheParameterGroup", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -322,7 +332,7 @@ type ApplyCacheParameterGroupResponse qingcloud.CommonResponse
 
 // ApplyCacheParameterGroup
 // 将缓存配置组应用于缓存服务。
-func ApplyCacheParameterGroup(c *qingcloud.Client, params ApplyCacheParameterGroupRequest) (ApplyCacheParameterGroupResponse, error) {
+func (c *CACHE) ApplyCacheParameterGroup(params ApplyCacheParameterGroupRequest) (ApplyCacheParameterGroupResponse, error) {
 	var result ApplyCacheParameterGroupResponse
 	err := c.Get("ApplyCacheParameterGroup", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -337,7 +347,7 @@ type DeleteCacheParameterGroupsResponse struct {
 }
 
 // DeleteCacheParameterGroups 删除缓存服务配置组。
-func DeleteCacheParameterGroups(c *qingcloud.Client, params DeleteCacheParameterGroupsRequest) (DeleteCacheParameterGroupsResponse, error) {
+func (c *CACHE) DeleteCacheParameterGroups(params DeleteCacheParameterGroupsRequest) (DeleteCacheParameterGroupsResponse, error) {
 	var result DeleteCacheParameterGroupsResponse
 	err := c.Get("DeleteCacheParameterGroups", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -352,7 +362,7 @@ type ModifyCacheParameterGroupAttributesResponse qingcloud.CommonResponse
 
 // ModifyCacheParameterGroupAttributes
 // 修改缓存服务配置组的名称或描述。
-func ModifyCacheParameterGroupAttributes(c *qingcloud.Client, params ModifyCacheParameterGroupAttributesRequest) (ModifyCacheParameterGroupAttributesResponse, error) {
+func (c *CACHE) ModifyCacheParameterGroupAttributes(params ModifyCacheParameterGroupAttributesRequest) (ModifyCacheParameterGroupAttributesResponse, error) {
 	var result ModifyCacheParameterGroupAttributesResponse
 	err := c.Get("ModifyCacheParameterGroupAttributes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -368,7 +378,7 @@ type DescribeCacheParametersResponse struct {
 }
 
 // DescribeCacheParameters 返回指定缓存配置组的所有配置项信息。
-func DescribeCacheParameters(c *qingcloud.Client, params DescribeCacheParametersRequest) (DescribeCacheParametersResponse, error) {
+func (c *CACHE) DescribeCacheParameters(params DescribeCacheParametersRequest) (DescribeCacheParametersResponse, error) {
 	var result DescribeCacheParametersResponse
 	err := c.Get("DescribeCacheParameters", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -385,7 +395,7 @@ type UpdateCacheParametersResponse struct {
 }
 
 // UpdateCacheParameters 更改缓存配置项。
-func UpdateCacheParameters(c *qingcloud.Client, params UpdateCacheParametersRequest) (UpdateCacheParametersResponse, error) {
+func (c *CACHE) UpdateCacheParameters(params UpdateCacheParametersRequest) (UpdateCacheParametersResponse, error) {
 	var result UpdateCacheParametersResponse
 	err := c.Get("UpdateCacheParameters", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -401,7 +411,7 @@ type ResetCacheParametersResponse struct {
 }
 
 // ResetCacheParameters 重置缓存配置项为系统默认值。
-func ResetCacheParameters(c *qingcloud.Client, params ResetCacheParametersRequest) (ResetCacheParametersResponse, error) {
+func (c *CACHE) ResetCacheParameters(params ResetCacheParametersRequest) (ResetCacheParametersResponse, error) {
 	var result ResetCacheParametersResponse
 	err := c.Get("ResetCacheParameters", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
