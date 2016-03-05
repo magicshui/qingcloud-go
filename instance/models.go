@@ -19,16 +19,13 @@ type Instance struct {
 		EipID     string `json:"eip_id"`
 	} `json:"eip"`
 	Extra struct {
-		NoRestrict int    `json:"no_restrict"`
-		NicMqueue  int    `json:"nic_mqueue"`
-		NoLimit    int    `json:"no_limit"`
-		CPUModel   string `json:"cpu_model"`
-		Slots      struct {
-			I52541B2ACe6B string `json:"i|52:54:1b:2a:ce:6b"`
-			DVolCxj3K1Ea  string `json:"d|vol-cxj3k1ea"`
-		} `json:"slots"`
-		BootDev  string `json:"boot_dev"`
-		BlockBus string `json:"block_bus"`
+		NoRestrict int         `json:"no_restrict"`
+		NicMqueue  int         `json:"nic_mqueue"`
+		NoLimit    int         `json:"no_limit"`
+		CPUModel   string      `json:"cpu_model"`
+		Slots      interface{} `json:"slots"`
+		BootDev    string      `json:"boot_dev"`
+		BlockBus   string      `json:"block_bus"`
 	} `json:"extra"`
 	Image struct {
 		UIType        string `json:"ui_type"`
@@ -54,7 +51,7 @@ type Instance struct {
 	CPUTopology         string        `json:"cpu_topology"`
 	Tags                []interface{} `json:"tags"`
 	TransitionStatus    string        `json:"transition_status"`
-	VolumeIds           []string      `json:"volume_ids"`
+	VolumeIds           []interface{} `json:"volume_ids"`
 	LastestSnapshotTime string        `json:"lastest_snapshot_time"`
 	InstanceName        string        `json:"instance_name"`
 	InstanceType        string        `json:"instance_type"`

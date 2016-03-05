@@ -113,11 +113,11 @@ func (c *SECURITYGROUP) ModifySecurityGroupAttributes(params ModifySecurityGroup
 }
 
 type DescribeSecurityGroupRulesRequest struct {
-	SecurityGroup      qingcloud.String
-	SecurityGroupRuleN qingcloud.NumberedString
-	Direction          qingcloud.String
-	Offset             qingcloud.Integer
-	Limit              qingcloud.Integer
+	SecurityGroup       qingcloud.String
+	SecurityGroupRulesN qingcloud.NumberedString
+	Direction           qingcloud.String
+	Offset              qingcloud.Integer
+	Limit               qingcloud.Integer
 }
 type DescribeSecurityGroupRulesResponse struct {
 	SecurityGroupRuleSet []SecurityGroupRule `json:"security_group_rule_set"`
@@ -137,11 +137,11 @@ func (c *SECURITYGROUP) DescribeSecurityGroupRules(params DescribeSecurityGroupR
 type AddSecurityGroupRulesRequest struct {
 	SecurityGroup qingcloud.String
 
-	RulesNProtocol             qingcloud.NumberedString
-	RulesNPriority             qingcloud.NumberedInteger
-	RuleNSecurityGroupRuleName qingcloud.NumberedString
-	RulesNAction               qingcloud.NumberedString
-	RulesNDirection            qingcloud.NumberedInteger
+	RulesNProtocol              qingcloud.NumberedString
+	RulesNPriority              qingcloud.NumberedInteger
+	RulesNSecurityGroupRuleName qingcloud.NumberedString
+	RulesNAction                qingcloud.NumberedString
+	RulesNDirection             qingcloud.NumberedInteger
 
 	RulesNVal1 qingcloud.NumberedString
 	RulesNVal2 qingcloud.NumberedString
