@@ -130,16 +130,18 @@ func (s *NumberedString) Enum(e ...string) {
 type Integer struct {
 	value int
 	enums map[int]bool
+	write bool
 }
 
 func (s *Integer) Set(t int) {
-
 	if len(s.enums) != 0 {
 		if _, ok := s.enums[t]; ok {
 			s.value = t
+			s.write = true
 		}
 	} else {
 		s.value = t
+		s.write = true
 	}
 }
 

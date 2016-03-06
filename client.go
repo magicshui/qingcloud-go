@@ -71,10 +71,16 @@ func (c *Client) Get(action string, params Params, response interface{}) error {
 	defer c.l.Unlock()
 	result, err := c.get(action, params)
 	if err != nil {
+		log.Printf("Get Error %s , %#v   %s", err, params, string(result))
 		return err
 	}
 	var errCode CommonResponse
-	json.Unmarshal(result, &errCode)
+	err = json.Unmarshal(result, &errCode)
+	if err != nil {
+		log.Printf("Get Error Unmashl %s , %#v   %s", err, params, string(result))
+		return err
+	}
+
 	if errCode.RetCode != 0 {
 		return errors.New(errCode.Message)
 	}
@@ -83,6 +89,7 @@ func (c *Client) Get(action string, params Params, response interface{}) error {
 
 	err = json.Unmarshal(result, &response)
 	if err != nil {
+		log.Printf("Get Error Unmashl to Response %s , %#v   %s", err, params, string(result))
 		return err
 	}
 	return nil

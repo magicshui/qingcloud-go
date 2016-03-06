@@ -55,7 +55,7 @@ func convertITypeToParams(data reflect.Value) Params {
 			var p = Param{}
 			p.Name = convertName(fieldName)
 			p.Value = el.Interface().(Integer).value
-			if p.Value == 0 {
+			if p.Value == 0 && !el.Interface().(Integer).write {
 				continue
 			}
 			params = append(params, &p)
