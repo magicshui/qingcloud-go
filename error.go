@@ -4,9 +4,10 @@ import (
 	"fmt"
 )
 
+// CommonResponse 通用的设置
 type CommonResponse struct {
 	Action  string `json:"action"`
-	JobId   string `json:"job_id"`
+	JobID   string `json:"job_id"`
 	RetCode int    `json:"ret_code"`
 	Message string `json:"message"`
 }

@@ -4,16 +4,19 @@ import (
 	"github.com/magicshui/qingcloud-go"
 )
 
+// ROUTER 路由
 type ROUTER struct {
 	*qingcloud.Client
 }
 
+// NewClient 创建新的路由控制器
 func NewClient(clt *qingcloud.Client) *ROUTER {
 	return &ROUTER{
 		Client: clt,
 	}
 }
 
+// DescribeRoutersRequest 创建参数
 type DescribeRoutersRequest struct {
 	RoutersN   qingcloud.NumberedString
 	Vxnet      qingcloud.String
@@ -24,6 +27,8 @@ type DescribeRoutersRequest struct {
 	Offset     qingcloud.Integer
 	Limit      qingcloud.Integer
 }
+
+// DescribeRoutersResponse 返回参数
 type DescribeRoutersResponse struct {
 	Action     string   `json:"action"`
 	RouterSet  []Router `json:"router_set"`

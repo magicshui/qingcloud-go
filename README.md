@@ -1,4 +1,4 @@
-qingcloud-go
+# qingcloud-go [![Build Status](https://travis-ci.org/magicshui/qingcloud-go.svg?branch=master)](https://travis-ci.org/magicshui/qingcloud-go)
 ============
 
 青云 SDK Go Version
