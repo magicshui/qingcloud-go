@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/hashicorp/go-cleanhttp"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -18,12 +19,14 @@ type Client struct {
 	params          Params
 	commonParams    Params
 	l               sync.Mutex
+	httpCli         *http.Client
 }
 
 func NewClient() *Client {
 	return &Client{
 		params:       Params{},
 		commonParams: Params{},
+		httpCli:      cleanhttp.DefaultClient(),
 	}
 }
 
@@ -85,8 +88,6 @@ func (c *Client) Get(action string, params Params, response interface{}) error {
 		return errors.New(errCode.Message)
 	}
 
-	log.Printf("%s", string(result))
-
 	err = json.Unmarshal(result, &response)
 	if err != nil {
 		log.Printf("Get Error Unmashl to Response %s , %#v   %s", err, params, string(result))
@@ -107,8 +108,6 @@ func (c *Client) Post(action string, params Params, response interface{}) error 
 		return errors.New(errCode.Message)
 	}
 
-	log.Printf("%s", string(result))
-
 	err = json.Unmarshal(result, &response)
 	if err != nil {
 		return err
@@ -127,8 +126,7 @@ func (c *Client) post(action string, params Params) ([]byte, error) {
 	c.addTimeStamp()
 	_url, _sig := c.getUrl("Post")
 	url := fmt.Sprintf("https://api.qingcloud.com/iaas/?%v&signature=%v", _url, _sig)
-	log.Printf("%s", url)
-	res, err := http.Post(url, "application/json;utf-8", nil)
+	res, err := c.httpCli.Post(url, "application/json;utf-8", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -146,8 +144,7 @@ func (c *Client) get(action string, params Params) ([]byte, error) {
 	c.addTimeStamp()
 	_url, _sig := c.getUrl("GET")
 	url := fmt.Sprintf("https://api.qingcloud.com/iaas/?%v&signature=%v", _url, _sig)
-	log.Printf("URL:\n %s", url)
-	res, err := http.Get(url)
+	res, err := c.httpCli.Get(url)
 	if err != nil {
 		return nil, err
 	}
