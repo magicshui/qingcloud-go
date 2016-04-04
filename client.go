@@ -26,7 +26,7 @@ func NewClient() *Client {
 	return &Client{
 		params:       Params{},
 		commonParams: Params{},
-		httpCli:      cleanhttp.DefaultClient(),
+		httpCli:      cleanhttp.DefaultPooledClient(),
 	}
 }
 
