@@ -1,9 +1,6 @@
-# qingcloud-go [![Build Status](https://travis-ci.org/magicshui/qingcloud-go.svg?branch=master)](https://travis-ci.org/magicshui/qingcloud-go)
-============
+# QingCloud Golang SDK [![Build Status](https://travis-ci.org/magicshui/qingcloud-go.svg?branch=master)](https://travis-ci.org/magicshui/qingcloud-go)
 
-青云 SDK Go Version
-
-# v2 WIP
+# V2 WIP 
 V2 是一个重写的版本，和老的版本不兼容，目前正在开发中。
 
 ## API List
