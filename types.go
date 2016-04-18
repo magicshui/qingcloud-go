@@ -113,10 +113,12 @@ func (s *NumberedString) Add(t ...string) {
 func (s *NumberedString) Enum(e ...string) {
 	if s.enums == nil {
 		s.enums = make(map[string]bool)
-		for _, o := range e {
-			s.enums[o] = true
-		}
 	}
+	
+	for _, o := range e {
+		s.enums[o] = true
+	}
+	
 	for k, _ := range s.values {
 		if _, ok := s.enums[k]; !ok {
 			delete(s.values, k)
