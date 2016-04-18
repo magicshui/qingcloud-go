@@ -1,5 +1,9 @@
 package snapshot
 
+import (
+	"time"
+)
+
 type Snapshot struct {
 	Status   string `json:"status"`
 	Resource struct {
