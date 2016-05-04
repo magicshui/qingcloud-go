@@ -115,7 +115,7 @@ func (c *SECURITYGROUP) ModifySecurityGroupAttributes(params ModifySecurityGroup
 type DescribeSecurityGroupRulesRequest struct {
 	SecurityGroup       qingcloud.String
 	SecurityGroupRulesN qingcloud.NumberedString
-	Direction           qingcloud.String
+	Direction           qingcloud.Integer
 	Offset              qingcloud.Integer
 	Limit               qingcloud.Integer
 }
