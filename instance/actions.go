@@ -85,7 +85,7 @@ func (c *INSTANCE) RunInstances(params RunInstancesRequest) (RunInstancesRespons
 }
 
 type TerminateInstancesRequest struct {
-	InstanceN qingcloud.NumberedString
+	InstancesN qingcloud.NumberedString
 }
 type TerminateInstancesResponse qingcloud.CommonResponse
 
