@@ -85,7 +85,7 @@ func (c *INSTANCE) RunInstances(params RunInstancesRequest) (RunInstancesRespons
 }
 
 type TerminateInstancesRequest struct {
-	InstanceN qingcloud.NumberedString
+	InstancesN qingcloud.NumberedString
 }
 type TerminateInstancesResponse qingcloud.CommonResponse
 
@@ -142,7 +142,7 @@ type ResetInstancesRequest struct {
 	LoginMode    qingcloud.String
 	LoginKeypair qingcloud.String
 	LoginPasswd  qingcloud.String
-	NeedNewsid   qingcloud.String
+	NeedNewsid   qingcloud.Integer
 }
 type ResetInstancesResponse qingcloud.CommonResponse
 
@@ -157,7 +157,7 @@ func (c *INSTANCE) ResetInstances(params ResetInstancesRequest) (ResetInstancesR
 type ResizeInstancesRequest struct {
 	InstancesN   qingcloud.NumberedString
 	InstanceType qingcloud.String
-	Cpu          qingcloud.String
+	Cpu          qingcloud.Integer
 	Memory       qingcloud.String
 	Zone         qingcloud.String
 }
