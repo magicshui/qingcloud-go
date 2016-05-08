@@ -115,7 +115,7 @@ func (c *SECURITYGROUP) ModifySecurityGroupAttributes(params ModifySecurityGroup
 type DescribeSecurityGroupRulesRequest struct {
 	SecurityGroup       qingcloud.String
 	SecurityGroupRulesN qingcloud.NumberedString
-	Direction           qingcloud.String
+	Direction           qingcloud.Integer
 	Offset              qingcloud.Integer
 	Limit               qingcloud.Integer
 }
@@ -251,7 +251,7 @@ type DeleteSecurityGroupSnapshotsRequest struct {
 	SecurityGroupSnapshotsN qingcloud.NumberedString
 }
 type DeleteSecurityGroupSnapshotsResponse struct {
-	SecurityGroupSnapshots []SecurityGroupSnapshot `json:"security_group_snapshots"`
+	SecurityGroupSnapshots []string `json:"security_group_snapshots"`
 
 	qingcloud.CommonResponse
 }
@@ -269,8 +269,8 @@ type RollbackSecurityGroupRequest struct {
 	SecurityGroupSnapshot qingcloud.String
 }
 type RollbackSecurityGroupResponse struct {
-	SecurityGroupId         []SecurityGroupSnapshot `json:"security_group_id"`
-	SecurityGroupSnapshotId []SecurityGroupSnapshot `json:"security_group_snapshot_id"`
+	SecurityGroupId         string `json:"security_group_id"`
+	SecurityGroupSnapshotId string `json:"security_group_snapshot_id"`
 	qingcloud.CommonResponse
 }
 
