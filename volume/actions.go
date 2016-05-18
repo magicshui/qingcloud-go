@@ -25,7 +25,6 @@ type DescribeVolumesRequest struct {
 	Limit      qingcloud.Integer
 }
 type DescribeVolumesResponse struct {
-	Action     string   `json:"action"`
 	VolumeSet  []Volume `json:"volume_set"`
 	TotalCount int      `json:"total_count"`
 	qingcloud.CommonResponse
@@ -46,9 +45,7 @@ type CreateVolumesRequest struct {
 	Count      qingcloud.Integer
 }
 type CreateVolumesResponse struct {
-	Action  string   `json:"action"`
 	Volumes []string `json:"volumes"`
-	JobId   string   `json:"job_id"`
 	qingcloud.CommonResponse
 }
 
