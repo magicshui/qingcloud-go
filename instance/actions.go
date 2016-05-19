@@ -23,7 +23,7 @@ type DescribeInstanceRequest struct {
 	InstanceTypeN qingcloud.NumberedString
 	InstanceClass qingcloud.Integer
 
-	StatusN    qingcloud.String
+	StatusN    qingcloud.NumberedString
 	SearchWord qingcloud.String
 	TagsN      qingcloud.NumberedString
 	Verbose    qingcloud.Integer
@@ -45,7 +45,7 @@ func (c *INSTANCE) DescribeInstances(params DescribeInstanceRequest) (DescribeIn
 	// 主机性能类型: 性能型:0 ,超高性能型:1
 	params.InstanceClass.Enum(0, 1)
 	// 主机状态: pending, running, stopped, suspended, terminated, ceased
-	params.InstanceTypeN.Enum("pending", "running", "stopped", "suspended", "terminated", "ceased")
+	params.StatusN.Enum("pending", "running", "stopped", "suspended", "terminated", "ceased")
 	err := c.Get("DescribeInstances", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
 }
@@ -90,7 +90,7 @@ func (c *INSTANCE) RunInstances(params RunInstancesRequest) (RunInstancesRespons
 }
 
 type TerminateInstancesRequest struct {
-	InstanceN qingcloud.NumberedString
+	InstancesN qingcloud.NumberedString
 }
 type TerminateInstancesResponse qingcloud.CommonResponse
 
@@ -147,7 +147,7 @@ type ResetInstancesRequest struct {
 	LoginMode    qingcloud.String
 	LoginKeypair qingcloud.String
 	LoginPasswd  qingcloud.String
-	NeedNewsid   qingcloud.String
+	NeedNewsid   qingcloud.Integer
 }
 type ResetInstancesResponse qingcloud.CommonResponse
 
@@ -162,7 +162,7 @@ func (c *INSTANCE) ResetInstances(params ResetInstancesRequest) (ResetInstancesR
 type ResizeInstancesRequest struct {
 	InstancesN   qingcloud.NumberedString
 	InstanceType qingcloud.String
-	Cpu          qingcloud.String
+	Cpu          qingcloud.Integer
 	Memory       qingcloud.String
 	Zone         qingcloud.String
 }

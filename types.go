@@ -4,14 +4,13 @@ import (
 	"strings"
 )
 
-// String 青云的 String 类型
 type String struct {
 	value string
 	enums map[string]bool
 	write bool
 }
 
-// Set 设置字段属性
+// TODO:
 func (s *String) Set(t string) {
 	if len(s.enums) != 0 {
 		if _, ok := s.enums[t]; ok {
@@ -24,7 +23,7 @@ func (s *String) Set(t string) {
 	}
 }
 
-// Enum 提前设置相关的允许范围
+// 对设置的内容进行修改
 func (s *String) Enum(t ...string) {
 	if s.enums == nil {
 		s.enums = make(map[string]bool)
@@ -42,14 +41,13 @@ func (s *String) String() string {
 	return s.value
 }
 
-// NumberedInteger X.N
+// TODO 实现这个类型
 type NumberedInteger struct {
 	values map[int64]bool
 	enums  map[int64]bool
 	write  bool
 }
 
-// Add 添加
 func (s *NumberedInteger) Add(t ...int64) {
 	if s.enums == nil {
 		s.enums = make(map[int64]bool)
@@ -67,13 +65,11 @@ func (s *NumberedInteger) Add(t ...int64) {
 		}
 	}
 }
-
-// Enum 范围
 func (s *NumberedInteger) Enum(e ...int64) {
 	if s.enums == nil {
 		s.enums = make(map[int64]bool)
 	}
-	for k := range s.values {
+	for k, _ := range s.values {
 		if _, ok := s.enums[k]; !ok {
 			delete(s.values, k)
 		}
@@ -83,7 +79,6 @@ func (s *NumberedInteger) Enum(e ...int64) {
 	}
 }
 
-// NumberedString x.N string 类型
 type NumberedString struct {
 	values map[string]bool
 	enums  map[string]bool
@@ -92,13 +87,11 @@ type NumberedString struct {
 
 func (s *NumberedString) String() string {
 	var a = []string{}
-	for i := range s.values {
+	for i, _ := range s.values {
 		a = append(a, i)
 	}
 	return strings.Join(a, ",")
 }
-
-// Add 添加
 func (s *NumberedString) Add(t ...string) {
 	if s.enums == nil {
 		s.enums = make(map[string]bool)
@@ -117,16 +110,16 @@ func (s *NumberedString) Add(t ...string) {
 		}
 	}
 }
-
-// Enum 范围
 func (s *NumberedString) Enum(e ...string) {
 	if s.enums == nil {
 		s.enums = make(map[string]bool)
-		for _, o := range e {
-			s.enums[o] = true
-		}
 	}
-	for k := range s.values {
+	
+	for _, o := range e {
+		s.enums[o] = true
+	}
+	
+	for k, _ := range s.values {
 		if _, ok := s.enums[k]; !ok {
 			delete(s.values, k)
 		}
@@ -136,14 +129,12 @@ func (s *NumberedString) Enum(e ...string) {
 	}
 }
 
-// Integer 请求的 int 类型
 type Integer struct {
 	value int
 	enums map[int]bool
 	write bool
 }
 
-// Set 设置值
 func (s *Integer) Set(t int) {
 	if len(s.enums) != 0 {
 		if _, ok := s.enums[t]; ok {
@@ -156,7 +147,6 @@ func (s *Integer) Set(t int) {
 	}
 }
 
-// Enum 设置范围
 func (s *Integer) Enum(e ...int) {
 	if s.enums == nil {
 		s.enums = make(map[int]bool)
@@ -166,12 +156,10 @@ func (s *Integer) Enum(e ...int) {
 	}
 }
 
-// Dict 字典类型
 type Dict struct {
 	values []map[string]interface{}
 }
 
-// Add 添加
 func (c *Dict) Add(t map[string]interface{}) {
 	if len(c.values) == 0 {
 		c.values = make([]map[string]interface{}, 0)
@@ -179,5 +167,6 @@ func (c *Dict) Add(t map[string]interface{}) {
 	c.values = append(c.values, t)
 }
 
-// Array TODO: 实现这个类型
+// TODO 实现这个类型
+
 type Array struct{}

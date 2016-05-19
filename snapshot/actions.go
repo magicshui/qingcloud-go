@@ -75,7 +75,7 @@ func ApplySnapshots(c *qingcloud.Client, params ApplySnapshotsRequest) (ApplySna
 
 type ModifySnapshotAttributesRequest struct {
 	Snapshot      qingcloud.String
-	SnappshotName qingcloud.String
+	SnapshotName  qingcloud.String
 	Description   qingcloud.String
 }
 type ModifySnapshotAttributesResponse qingcloud.CommonResponse
