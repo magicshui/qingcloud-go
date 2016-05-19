@@ -34,6 +34,8 @@ type DescribeVolumesResponse struct {
 // 可根据硬盘ID，状态，硬盘名称作过滤条件，来获取硬盘列表。 如果不指定任何过滤条件，默认返回你所拥有的所有硬盘。 如果指定不存在的硬盘ID，或非法状态值，则会返回错误信息。
 func (c *VOLUME) DescribeVolumes(params DescribeVolumesRequest) (DescribeVolumesResponse, error) {
 	var result DescribeVolumesResponse
+	// 硬盘状态: pending, available, in-use, suspended, deleted, ceased
+	params.StatusN.Enum("pending", "available", "in-use", "suspended", "deleted", "ceased")
 	err := c.Get("DescribeVolumes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
 }

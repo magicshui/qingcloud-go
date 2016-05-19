@@ -46,6 +46,7 @@ func (c *INSTANCE) DescribeInstances(params DescribeInstanceRequest) (DescribeIn
 	params.InstanceClass.Enum(0, 1)
 	// 主机状态: pending, running, stopped, suspended, terminated, ceased
 	params.StatusN.Enum("pending", "running", "stopped", "suspended", "terminated", "ceased")
+	// TODO: limit 最大为100
 	err := c.Get("DescribeInstances", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
 }
@@ -85,6 +86,18 @@ type RunInstancesResponse struct {
 // 如果参数中既指定 instance_type ，又指定了 cpu 和 memory ， 则以指定的 cpu 和 memory 为准。
 func (c *INSTANCE) RunInstances(params RunInstancesRequest) (RunInstancesResponse, error) {
 	var result RunInstancesResponse
+	// CPU core，有效值为: 1, 2, 4, 8, 16
+	params.CPU.Enum(1, 2, 4, 8, 16)
+	// 内存，有效值为: 1024, 2048, 4096, 6144, 8192, 12288, 16384, 24576, 32768
+	params.Memory.Enum(1024, 2048, 4096, 6144, 8192, 12288, 16384, 24576, 32768)
+	// 1: 生成新的SID，0: 不生成新的SID, 默认为0；只对Windows类型主机有效
+	params.NeedNewsid.Enum(1, 0)
+	// 1: 使用 User Data 功能；0: 不使用 User Data 功能；默认为 0。
+	params.NeedUserdata.Enum(0, 1)
+	// User Data 类型，有效值：’plain’, ‘exec’ 或 ‘tar’。为 ‘plain’或’exec’ 时，使用一个 Base64 编码后的字符串；为 ‘tar’ 时，使用一个压缩包（种类为 zip，tar，tgz，tbz）。
+	params.UserdataType.Enum("plain", "exec", "tar")
+	// 主机性能类型: 性能型:0 ,超高性能型:1
+	params.InstanceClass.Enum("0", "1")
 	err := c.Get("RunInstances", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
 }
