@@ -4,24 +4,26 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/hashicorp/go-cleanhttp"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"sync"
 	"time"
+
+	"github.com/hashicorp/go-cleanhttp"
 )
 
+// Client 客户端
 type Client struct {
-	zone            string `json:"zone"`
-	accessKeyID     string `json:"access_key_id"`
-	secretAccessKey string `json:"secret_access_key"`
+	zone            string
+	accessKeyID     string
+	secretAccessKey string
 	params          Params
 	commonParams    Params
 	l               sync.Mutex
 	httpCli         *http.Client
 }
 
+// NewClient 创建新的客户端
 func NewClient() *Client {
 	return &Client{
 		params:       Params{},
@@ -30,6 +32,7 @@ func NewClient() *Client {
 	}
 }
 
+// ConnectToZone 建立连接
 func (c *Client) ConnectToZone(zone string, id string, secret string) {
 	c.zone = zone
 	c.accessKeyID = id
@@ -57,31 +60,29 @@ func (c *Client) addTimeStamp() {
 	})
 }
 
-func (c *Client) getUrl(httpMethod string) (string, string) {
-	for _, v := range c.commonParams {
-		c.params = append(c.params, v)
+func (c *Client) getURL(httpMethod string) (string, string) {
+	for i := range c.commonParams {
+		c.params = append(c.params, c.commonParams[i])
 	}
 	sortParamsByKey(c.params)
 	urlEscapeParams(c.params)
-	url := generateUrlByParams(c.params)
-	url2 := genSignatureUrl(httpMethod, `/iaas/`, url)
-	sig := genSignature(url2, c.secretAccessKey)
-	return url, sig
+	url := generateURLByParams(c.params)
+	return url, genSignature(genSignatureURL(httpMethod, `/iaas/`, url), c.secretAccessKey)
 }
 
+// Get 获取数据
 func (c *Client) Get(action string, params Params, response interface{}) error {
 	c.l.Lock()
 	defer c.l.Unlock()
 	result, err := c.get(action, params)
 	if err != nil {
-		log.Printf("Get Error %s , %#v   %s", err, params, string(result))
-		return err
+		return fmt.Errorf("Get Error %s , %#v   %s", err, params, string(result))
 	}
+
 	var errCode CommonResponse
 	err = json.Unmarshal(result, &errCode)
 	if err != nil {
-		log.Printf("Get Error Unmashl %s , %#v   %s", err, params, string(result))
-		return err
+		return fmt.Errorf("Get Error Unmashl %s , %#v   %s", err, params, string(result))
 	}
 
 	if errCode.RetCode != 0 {
@@ -90,11 +91,13 @@ func (c *Client) Get(action string, params Params, response interface{}) error {
 
 	err = json.Unmarshal(result, &response)
 	if err != nil {
-		log.Printf("Get Error Unmashl to Response %s , %#v   %s", err, params, string(result))
-		return err
+		return fmt.Errorf("Get Error Unmashl to Response %s , %#v   %s", err, params, string(result))
 	}
+
 	return nil
 }
+
+// Post 发送数据
 func (c *Client) Post(action string, params Params, response interface{}) error {
 	c.l.Lock()
 	defer c.l.Unlock()
@@ -117,15 +120,18 @@ func (c *Client) Post(action string, params Params, response interface{}) error 
 
 // TODO: fix this
 func (c *Client) post(action string, params Params) ([]byte, error) {
-	var _p []*Param
-	c.params = _p
-	for i, _ := range params {
+	var p []*Param
+	c.params = p
+
+	for i := range params {
 		c.params = append(c.params, params[i])
 	}
 	c.addAction(action)
 	c.addTimeStamp()
-	_url, _sig := c.getUrl("Post")
+
+	_url, _sig := c.getURL("Post")
 	url := fmt.Sprintf("https://api.qingcloud.com/iaas/?%v&signature=%v", _url, _sig)
+
 	res, err := c.httpCli.Post(url, "application/json;utf-8", nil)
 	if err != nil {
 		return nil, err
@@ -137,12 +143,15 @@ func (c *Client) post(action string, params Params) ([]byte, error) {
 func (c *Client) get(action string, params Params) ([]byte, error) {
 	var _p []*Param
 	c.params = _p
-	for i, _ := range params {
+
+	for i := range params {
 		c.params = append(c.params, params[i])
 	}
+
 	c.addAction(action)
 	c.addTimeStamp()
-	_url, _sig := c.getUrl("GET")
+
+	_url, _sig := c.getURL("GET")
 	url := fmt.Sprintf("https://api.qingcloud.com/iaas/?%v&signature=%v", _url, _sig)
 	res, err := c.httpCli.Get(url)
 	if err != nil {

@@ -4,19 +4,22 @@ import (
 	"github.com/magicshui/qingcloud-go"
 )
 
+// INSTANCE 主机服务
 type INSTANCE struct {
 	*qingcloud.Client
 }
 
+// NewClient 创建主机服务
 func NewClient(clt *qingcloud.Client) *INSTANCE {
 	return &INSTANCE{
 		Client: clt,
 	}
 }
 
+// DescribeInstanceRequest 请求
 type DescribeInstanceRequest struct {
 	InstancesN    qingcloud.NumberedString
-	ImageIdN      qingcloud.NumberedString
+	ImageIDN      qingcloud.NumberedString
 	InstanceTypeN qingcloud.NumberedString
 	InstanceClass qingcloud.Integer
 
@@ -28,6 +31,7 @@ type DescribeInstanceRequest struct {
 	Limit      qingcloud.Integer
 }
 
+// DescribeInstanceResponse 返回结果
 type DescribeInstanceResponse struct {
 	InstanceSet []Instance `json:"instance_set"`
 	TotalCount  int        `json:"total_count"`
@@ -46,10 +50,11 @@ func (c *INSTANCE) DescribeInstances(params DescribeInstanceRequest) (DescribeIn
 	return result, err
 }
 
+// RunInstancesRequest 请求
 type RunInstancesRequest struct {
-	ImageId       qingcloud.String
+	ImageID       qingcloud.String
 	InstanceType  qingcloud.String
-	Cpu           qingcloud.Integer
+	CPU           qingcloud.Integer
 	Memory        qingcloud.Integer
 	Count         qingcloud.Integer
 	InstanceName  qingcloud.String

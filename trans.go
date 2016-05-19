@@ -7,11 +7,17 @@ import (
 	"unicode"
 )
 
+// TransfomRequestToParams 转换请求参数
 func TransfomRequestToParams(a interface{}) Params {
 	return convertITypeToParams(reflect.ValueOf(a).Elem())
 }
 
+// 转化名称，对于一些常用的关键词，例如：CPU，ID 等特殊处理
 func convertName(s string, number ...string) string {
+	var keep = []string{"ID", "CPU"}
+	for i := range keep {
+		s = strings.Replace(s, keep[i], s[:1]+strings.ToLower(s[1:]), -1)
+	}
 	var result string
 	var words []string
 	var lastPos int
@@ -69,24 +75,24 @@ func convertITypeToParams(data reflect.Value) Params {
 			params = append(params, &p)
 		case reflect.TypeOf(NumberedInteger{}):
 			w := 1
-			for m, _ := range el.Interface().(NumberedInteger).values {
+			for m := range el.Interface().(NumberedInteger).values {
 				var p = Param{}
 				p.Name = convertName(fieldName, strconv.Itoa(w))
 				p.Value = m
-				w += 1
+				w++
 				params = append(params, &p)
 			}
 		case reflect.TypeOf(NumberedString{}):
 			w := 1
-			for m, _ := range el.Interface().(NumberedString).values {
+			for m := range el.Interface().(NumberedString).values {
 				var p = Param{}
 				p.Name = convertName(fieldName, strconv.Itoa(w))
 				p.Value = m
-				w += 1
+				w++
 				params = append(params, &p)
 			}
 		case reflect.TypeOf(Dict{}):
-			for m, _ := range el.Interface().(Dict).values {
+			for m := range el.Interface().(Dict).values {
 				var p = Param{}
 				p.Name = convertName(fieldName)
 				p.Value = m

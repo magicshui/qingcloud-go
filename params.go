@@ -10,40 +10,43 @@ import (
 	"strings"
 )
 
+// Param 请求参数
 type Param struct {
 	Name  string
 	Value interface{}
 }
 
+// Params 请求参数数组
 type Params []*Param
 
+// Len 长度
 func (ps Params) Len() int {
 	return len(ps)
 }
 
+// Swap swap
 func (ps Params) Swap(i, j int) { ps[i], ps[j] = ps[j], ps[i] }
 
-type ParamsSortByName struct{ Params }
-
-func (s ParamsSortByName) Less(i, j int) bool { return s.Params[i].Name < s.Params[j].Name }
+// Less less
+func (ps Params) Less(i, j int) bool { return ps[i].Name < ps[j].Name }
 
 func sortParamsByKey(ps Params) Params {
-
-	sort.Sort(ParamsSortByName{ps})
+	sort.Sort(ps)
 	return ps
-
 }
 
+// 对特定的 + 进行转义
 func urlEscapeParams(ps Params) Params {
-	for i, _ := range ps {
-		if str, ok := ps[i].Value.(string); ok {
-			ps[i].Value = strings.Replace(url.QueryEscape(str), "+", "%20", -1)
+	for _, v := range ps {
+		if str, ok := v.Value.(string); ok {
+			v.Value = strings.Replace(url.QueryEscape(str), "+", "%20", -1)
 		}
 	}
 	return ps
 }
 
-func generateUrlByParams(ps Params) string {
+// 生成参数
+func generateURLByParams(ps Params) string {
 	var urls []string
 	for _, v := range ps {
 		urls = append(urls, fmt.Sprintf("%v=%v", v.Name, v.Value))
@@ -51,14 +54,14 @@ func generateUrlByParams(ps Params) string {
 	return strings.Join(urls, "&")
 }
 
-func genSignatureUrl(httpMethod string, uri string, url string) string {
+func genSignatureURL(httpMethod string, uri string, url string) string {
 	return fmt.Sprintf("%v\n%v\n%v", httpMethod, uri, url)
 }
 
-func genSignature(signUrl, secret string) string {
+func genSignature(signURL, secret string) string {
 	key := []byte(secret)
 	mac := hmac.New(sha256.New, key)
-	mac.Write([]byte(signUrl))
+	mac.Write([]byte(signURL))
 	sEnc := b64.StdEncoding.EncodeToString(mac.Sum(nil))
 	strings.Replace(sEnc, " ", "+", -1)
 	fin := url.QueryEscape(sEnc)

@@ -6,19 +6,22 @@ import (
 	"github.com/magicshui/qingcloud-go"
 )
 
+// KEYPAIR 密钥服务
 type KEYPAIR struct {
 	*qingcloud.Client
 }
 
+// NewClient 创建新的密钥服务
 func NewClient(clt *qingcloud.Client) *KEYPAIR {
 	return &KEYPAIR{
 		Client: clt,
 	}
 }
 
+// DescribeKeyPairsRequest 查找密钥请求
 type DescribeKeyPairsRequest struct {
 	KeypairsN     qingcloud.NumberedString
-	InstanceId    qingcloud.String
+	InstanceID    qingcloud.String
 	EncryptMethod qingcloud.String
 
 	StatusN    qingcloud.String
@@ -29,6 +32,7 @@ type DescribeKeyPairsRequest struct {
 	Limit      qingcloud.Integer
 }
 
+// DescribeKeyPairsResponse 密钥请求结果
 type DescribeKeyPairsResponse struct {
 	qingcloud.CommonResponse
 	TotalCount int       `json:"total_count"`

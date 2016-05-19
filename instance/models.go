@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Instance 主机
 type Instance struct {
 	Vxnets []struct {
 		VxnetName string `json:"vxnet_name"`
