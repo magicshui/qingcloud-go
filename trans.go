@@ -5,8 +5,6 @@ import (
 	"strconv"
 	"strings"
 	"unicode"
-
-	"log"
 )
 
 // TransfomRequestToParams 转换请求参数
@@ -20,9 +18,6 @@ func convertName(s string, number ...string) string {
 	for i := range keep {
 		s = strings.Replace(s, keep[i], keep[i][:1]+strings.ToLower(keep[i][1:]), -1)
 	}
-
-	log.Printf("New %s", s)
-
 	var result string
 	var words []string
 	var lastPos int
