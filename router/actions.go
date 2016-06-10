@@ -228,8 +228,7 @@ type ModifyRouterStaticAttributesRequest struct {
 }
 type ModifyRouterStaticAttributesResponse struct {
 	qingcloud.CommonResponse
-	// TODO?文档错误
-	RouterStaticId []string `json:"router_static_id"`
+	RouterStaticId string `json:"router_static_id"`
 }
 
 // ModifyRouterStaticAttributes
