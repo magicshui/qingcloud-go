@@ -311,10 +311,10 @@ func (c *ROUTER) DeleteRouterStaticEntries(params DeleteRouterStaticEntriesReqeu
 }
 
 type ModifyRouterStaticEntryAttributesReqeust struct {
-	RouterStaticEntry      qingcloud.String
-	RouterStaticEntry_name qingcloud.String
-	Val1                   qingcloud.String
-	Val2                   qingcloud.String
+	RouterStaticEntry     qingcloud.String
+	RouterStaticEntryName qingcloud.String
+	Val1                  qingcloud.String
+	Val2                  qingcloud.String
 }
 type ModifyRouterStaticEntryAttributesResponse struct {
 	RouterStaticEntry string `json:"router_static_entry"`
@@ -329,7 +329,7 @@ func (c *ROUTER) ModifyRouterStaticEntryAttributes(params ModifyRouterStaticEntr
 }
 
 type DescribeRouterStaticEntriesRequest struct {
-	RouterStaticEntryId qingcloud.String
+	RouterStaticEntryID qingcloud.String
 	RouterStatic        qingcloud.String
 	Offset              qingcloud.Integer
 	Limit               qingcloud.Integer
