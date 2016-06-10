@@ -5,6 +5,8 @@ import (
 	"strconv"
 	"strings"
 	"unicode"
+
+	"log"
 )
 
 // TransfomRequestToParams 转换请求参数
@@ -16,8 +18,11 @@ func TransfomRequestToParams(a interface{}) Params {
 func convertName(s string, number ...string) string {
 	var keep = []string{"ID", "CPU"}
 	for i := range keep {
-		s = strings.Replace(s, keep[i], s[:1]+strings.ToLower(s[1:]), -1)
+		s = strings.Replace(s, keep[i], keep[i][:1]+strings.ToLower(keep[i][1:]), -1)
 	}
+
+	log.Printf("New %s", s)
+
 	var result string
 	var words []string
 	var lastPos int
