@@ -210,6 +210,7 @@ type DescribeLoadBalancerListenersRequest struct {
 }
 type DescribeLoadBalancerListenersResponse struct {
 	LoadbalancerListenerSet []LoadbalancerListener `json:"loadbalancer_listener_set"`
+	TotalCount              int                    `json:"total_count"`
 	qingcloud.CommonResponse
 }
 
@@ -289,6 +290,7 @@ type DescribeLoadBalancerBackendsRequest struct {
 }
 type DescribeLoadBalancerBackendsResponse struct {
 	LoadbalancerBackendSet []LoadbalancerBackend `json:"loadbalancer_backend_set"`
+	TotalCount             int                   `json:"total_count"`
 	qingcloud.CommonResponse
 }
 
