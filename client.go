@@ -153,10 +153,13 @@ func (c *Client) get(action string, params Params) ([]byte, error) {
 
 	_url, _sig := c.getURL("GET")
 	url := fmt.Sprintf("https://api.qingcloud.com/iaas/?%v&signature=%v", _url, _sig)
+
 	res, err := c.httpCli.Get(url)
 	if err != nil {
 		return nil, err
 	}
 	defer res.Body.Close()
-	return ioutil.ReadAll(res.Body)
+
+	result, err := ioutil.ReadAll(res.Body)
+	return result, err
 }

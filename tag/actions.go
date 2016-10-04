@@ -4,6 +4,17 @@ import (
 	"github.com/magicshui/qingcloud-go"
 )
 
+type TAG struct {
+	*qingcloud.Client
+}
+
+func NewClient(clt *qingcloud.Client) *TAG {
+	var a = &TAG{
+		Client: clt,
+	}
+	return a
+}
+
 type DescribeTagsRequest struct {
 	SearchWord qingcloud.String
 	TagsN      qingcloud.NumberedString
@@ -20,7 +31,7 @@ type DescribeTagsResponse struct {
 // DescribeTags
 // 获取一个或多个标签
 // 可根据标签ID，名称作为过滤条件，获取标签列表。 如果不指定任何过滤条件，默认返回你所拥有的所有标签。
-func DescribeTags(c *qingcloud.Client, params DescribeTagsRequest) (DescribeTagsResponse, error) {
+func (c *TAG) DescribeTags(params DescribeTagsRequest) (DescribeTagsResponse, error) {
 	var result DescribeTagsResponse
 	err := c.Get("DescribeTags", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -38,7 +49,7 @@ type CreateTagResponse struct {
 // 创建标签，每个标签可以绑定多个资源。
 // 注意: 标签名称少于15个字符, 不可重复.
 // 标签数据可以随时通过 DescribeTags 得到。
-func CreateTag(c *qingcloud.Client, params CreateTagRequest) (CreateTagResponse, error) {
+func (c *TAG) CreateTag(params CreateTagRequest) (CreateTagResponse, error) {
 	var result CreateTagResponse
 	err := c.Get("CreateTag", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -54,7 +65,7 @@ type DeleteTagsResponse struct {
 
 // DeleteTags
 // 删除一个或多个你拥有的标签，该标签绑定的所有资源自动解除绑定关系 关于解绑标签可参考 DetachTags
-func DeleteTags(c *qingcloud.Client, params DeleteTagsRequest) (DeleteTagsResponse, error) {
+func (c *TAG) DeleteTags(params DeleteTagsRequest) (DeleteTagsResponse, error) {
 	var result DeleteTagsResponse
 	err := c.Get("DeleteTags", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -69,7 +80,7 @@ type ModifyTagAttributesResponse qingcloud.CommonResponse
 
 // ModifyTagAttributes 修改标签的名称和描述。
 // 一次只能修改一个标签。
-func ModifyTagAttributes(c *qingcloud.Client, params ModifyTagAttributesRequest) (ModifyTagAttributesResponse, error) {
+func (c *TAG) ModifyTagAttributes(params ModifyTagAttributesRequest) (ModifyTagAttributesResponse, error) {
 	var result ModifyTagAttributesResponse
 	err := c.Get("ModifyTagAttributes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -84,7 +95,7 @@ type AttachTagsResponse qingcloud.CommonResponse
 
 // AttachTags
 // 将标签绑定到资源上, 绑定之后，获取资源列表（例如 DescribeInstances） 的时候，可以传参数tags来过滤该标签的资源, 获取资源列表(例如DescribeInstances), 资源详情也会包含已绑定的标签信息
-func AttachTags(c *qingcloud.Client, params AttachTagsRequest) (AttachTagsResponse, error) {
+func (c *TAG) AttachTags(params AttachTagsRequest) (AttachTagsResponse, error) {
 	var result AttachTagsResponse
 	err := c.Get("AttachTags", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -99,7 +110,7 @@ type DetachTagsResponse qingcloud.CommonResponse
 
 // DetachTags
 // 将标签从资源上解绑
-func DetachTags(c *qingcloud.Client, params DetachTagsRequest) (DetachTagsResponse, error) {
+func (c *TAG) DetachTags(params DetachTagsRequest) (DetachTagsResponse, error) {
 	var result DetachTagsResponse
 	err := c.Get("DetachTags", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err

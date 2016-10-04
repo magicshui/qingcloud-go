@@ -186,13 +186,13 @@ V2 是一个重写的版本，和老的版本不兼容，目前正在开发中�
 - [x] CreateRDBFromSnapshot
 - [x] CreateTempRDBInstanceFromSnapshot
 - [x] GetRDBInstanceFiles
-- [ ] CopyRDBInstanceFilesToFTP
-- [ ] CeaseRDBInstance
-- [ ] CreateTempRDBInstanceFromSnapshot
+- [x] CopyRDBInstanceFilesToFTP
+- [x] CeaseRDBInstance
+- [x] CreateTempRDBInstanceFromSnapshot
 - [ ] GetRDBMonitor
-- [ ] ModifyRDBParameters
-- [ ] ApplyRDBParameterGroup
-- [ ] DescribeRDBParameters
+- [x] ModifyRDBParameters
+- [x] ApplyRDBParameterGroup
+- [x] DescribeRDBParameters
 
 ## Mongo 集群
 - [x] DescribeMongoNodes
@@ -237,31 +237,72 @@ V2 是一个重写的版本，和老的版本不兼容，目前正在开发中�
 - [x] UpdateCacheParameters
 - [x] ResetCacheParameters
 
-## Virtual SAN
-- [ ] CreateS2Server
-- [ ] DescribeS2Servers
-- [ ] ModifyS2Server
-- [ ] ResizeS2Servers
-- [ ] DeleteS2Servers
-- [ ] PowerOnS2Servers
-- [ ] PowerOffS2Servers
-- [ ] UpdateS2Servers
-- [ ] ChangeS2ServerVxnet
-- [ ] CreateS2SharedTarget
-- [ ] DescribeS2SharedTargets
-- [ ] DeleteS2SharedTargets
-- [ ] EnableS2SharedTargets
-- [ ] DisableS2SharedTargets
-- [ ] ModifyS2SharedTargets
-- [ ] AttachToS2SharedTarget
-- [ ] DetachFromS2SharedTarget
-- [ ] DescribeS2DefaultParameters
+## Virtual SAN 
+- [x] CreateS2Server
+- [x] DescribeS2Servers
+- [x] ModifyS2Server
+- [x] ResizeS2Servers
+- [x] DeleteS2Servers
+- [x] PowerOnS2Servers
+- [x] PowerOffS2Servers
+- [x] UpdateS2Servers
+- [x] ChangeS2ServerVxnet
+- [x] CreateS2SharedTarget
+- [x] DescribeS2SharedTargets
+- [x] DeleteS2SharedTargets
+- [x] EnableS2SharedTargets
+- [x] DisableS2SharedTargets
+- [x] ModifyS2SharedTargets
+- [x] AttachToS2SharedTarget
+- [x] DetachFromS2SharedTarget
+- [x] DescribeS2DefaultParameters
+
+*注意：* 青云的文档不全
 
 ## Spark
 - [x] AddSparkNodes
 - [x] DeleteSparkNodes
 - [x] StartSparks
 - [x] StopSparks
+
+## Hadoop 服务
+
+- [x] AddHadoopNodes
+- [x] DeleteHadoopNodes
+- [x] StartHadoops
+- [x] StopHadoops
+
+## 资源协作中心
+- [x] DescribeSharedResourceGroups
+- [x] DescribeResourceGroups
+- [x] CreateResourceGroups
+- [x] ModifyResourceGroupAttributes
+- [x] DeleteResourceGroups
+- [x] DescribeResourceGroupItems
+- [x] AddResourceGroupItems
+- [x] DeleteResourceGroupItems
+- [ ] DescribeUserGroups
+- [ ] CreateUserGroups
+- [ ] ModifyUserGroupAttributes
+- [ ] DeleteUserGroups
+- [ ] DescribeUserGroupMembers
+- [ ] AddUserGroupMembers
+- [ ] ModifyUserGroupMemberAttributes
+- [ ] DeleteUserGroupMembers
+- [ ] DescribeGroupRoles
+- [ ] CreateGroupRoles
+- [ ] ModifyGroupRoleAttributes
+- [ ] DeleteGroupRoles
+- [ ] DescribeGroupRoleRules
+- [ ] AddGroupRoleRules
+- [ ] ModifyGroupRoleRuleAttributes
+- [ ] DeleteGroupRoleRules
+- [ ] GrantResourceGroupsToUserGroups
+- [ ] RevokeResourceGroupsFromUserGroups
+- [ ] DescribeResourceUserGroups
+
+## 消息中心
+- [x] DescribeNotificationCenterUserPosts
 
 
 # V1 （已经废弃）

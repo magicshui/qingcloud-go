@@ -4,6 +4,17 @@ import (
 	"github.com/magicshui/qingcloud-go"
 )
 
+type ZONE struct {
+	*qingcloud.Client
+}
+
+func NewClient(clt *qingcloud.Client) *ZONE {
+	var a = &ZONE{
+		Client: clt,
+	}
+	return a
+}
+
 // DescribeZonesRequest 请求
 type DescribeZonesRequest struct {
 	ZonesN qingcloud.NumberedString
@@ -18,7 +29,7 @@ type DescribeZonesResponse struct {
 }
 
 // DescribeZones 获取可访问的区域列表。
-func DescribeZones(c *qingcloud.Client, params DescribeZonesRequest) (DescribeZonesResponse, error) {
+func (c *ZONE) DescribeZones(params DescribeZonesRequest) (DescribeZonesResponse, error) {
 	var result DescribeZonesResponse
 	err := c.Get("DescribeZones", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err

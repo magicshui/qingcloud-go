@@ -143,8 +143,8 @@ type AddSecurityGroupRulesRequest struct {
 	RulesNAction                qingcloud.NumberedString
 	RulesNDirection             qingcloud.NumberedInteger
 
-	RulesNVal1 qingcloud.NumberedString
-	RulesNVal2 qingcloud.NumberedString
+	RulesNVal1 qingcloud.NumberedInteger
+	RulesNVal2 qingcloud.NumberedInteger
 	RulesNVal3 qingcloud.NumberedString
 }
 type AddSecurityGroupRulesResponse struct {
@@ -193,7 +193,7 @@ type ModifySecurityGroupRuleAttributesRequest struct {
 	Protocol              qingcloud.String
 	Val1                  qingcloud.Integer
 	Val2                  qingcloud.Integer
-	Val3                  qingcloud.Integer
+	Val3                  qingcloud.String
 }
 type ModifySecurityGroupRuleAttributesResponse struct {
 	qingcloud.CommonResponse

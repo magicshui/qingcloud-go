@@ -4,6 +4,17 @@ import (
 	"github.com/magicshui/qingcloud-go"
 )
 
+type RDB struct {
+	*qingcloud.Client
+}
+
+func NewClient(clt *qingcloud.Client) *RDB {
+	var a = &RDB{
+		Client: clt,
+	}
+	return a
+}
+
 type DescribeRDBsRequest struct {
 	RdbsN     qingcloud.NumberedString
 	RdbEngine qingcloud.String
@@ -23,7 +34,7 @@ type DescribeRDBsResponse struct {
 
 // DescribeRDBs 获取一个或多个数据库集群信息。
 // 可根据数据库集群 ID，状态，数据库集群名称作过滤条件，来获取数据库集群列表。 如果不指定任何过滤条件，默认返回你所拥有的所有数据库集群。 如果指定不存在的路由器ID，或非法状态值，则会返回错误信息。
-func DescribeRDBs(c *qingcloud.Client, params DescribeRDBsRequest) (DescribeRDBsResponse, error) {
+func (c *RDB) DescribeRDBs(params DescribeRDBsRequest) (DescribeRDBsResponse, error) {
 	var result DescribeRDBsResponse
 	err := c.Get("DescribeRDBs", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -50,7 +61,7 @@ type CreateRDBResponse struct {
 
 // CreateRDB
 // 创建一个数据库集群。
-func CreateRDB(c *qingcloud.Client, params CreateRDBRequest) (CreateRDBResponse, error) {
+func (c *RDB) CreateRDB(params CreateRDBRequest) (CreateRDBResponse, error) {
 	var result CreateRDBResponse
 	err := c.Get("CreateRDB", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -63,7 +74,7 @@ type DeleteRDBsResponse qingcloud.CommonResponse
 
 // DeleteRDBs
 // 删除一个数据库集群。
-func DeleteRDBs(c *qingcloud.Client, params DeleteRDBsRequest) (DeleteRDBsResponse, error) {
+func (c *RDB) DeleteRDBs(params DeleteRDBsRequest) (DeleteRDBsResponse, error) {
 	var result DeleteRDBsResponse
 	err := c.Get("DeleteRDBs", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -79,7 +90,7 @@ type StartRDBsResponse struct {
 
 // StartRDBs
 // 启动指定的数据库集群。
-func StartRDBs(c *qingcloud.Client, params StartRDBsRequest) (StartRDBsResponse, error) {
+func (c *RDB) StartRDBs(params StartRDBsRequest) (StartRDBsResponse, error) {
 	var result StartRDBsResponse
 	err := c.Get("StartRDBs", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -95,7 +106,7 @@ type StopRDBsResponse struct {
 
 // StopRDBs
 // 关闭指定的数据库集群。
-func StopRDBs(c *qingcloud.Client, params StopRDBsRequest) (StopRDBsResponse, error) {
+func (c *RDB) StopRDBs(params StopRDBsRequest) (StopRDBsResponse, error) {
 	var result StopRDBsResponse
 	err := c.Get("StopRDBs", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -113,7 +124,7 @@ type ResizeRDBsResponse struct {
 
 // ResizeRDBs
 // 扩容指定的数据库集群。
-func ResizeRDBs(c *qingcloud.Client, params ResizeRDBsRequest) (ResizeRDBsResponse, error) {
+func (c *RDB) ResizeRDBs(params ResizeRDBsRequest) (ResizeRDBsResponse, error) {
 	var result ResizeRDBsResponse
 	err := c.Get("ResizeRDBs", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -130,7 +141,7 @@ type RDBsLeaveVxnetResponse struct {
 
 // RDBsLeaveVxnet¶
 // 将指定的数据库集群从私有网络中脱离。
-func RDBsLeaveVxnet(c *qingcloud.Client, params RDBsLeaveVxnetRequest) (RDBsLeaveVxnetResponse, error) {
+func (c *RDB) RDBsLeaveVxnet(params RDBsLeaveVxnetRequest) (RDBsLeaveVxnetResponse, error) {
 	var result RDBsLeaveVxnetResponse
 	err := c.Get("RDBsLeaveVxnet", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -145,7 +156,7 @@ type RDBsJoinVxnetResponse struct {
 	Rdbs []string `json:"rdbs"`
 }
 
-func RDBsJoinVxnet(c *qingcloud.Client, params RDBsJoinVxnetRequest) (RDBsJoinVxnetResponse, error) {
+func (c *RDB) RDBsJoinVxnet(params RDBsJoinVxnetRequest) (RDBsJoinVxnetResponse, error) {
 	var result RDBsJoinVxnetResponse
 	err := c.Get("RDBsJoinVxnet", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -169,7 +180,7 @@ type CreateRDBFromSnapshotResponse struct {
 
 // CreateRDBFromSnapshot
 // 从指定备份创建出一个全新的数据库集群。
-func CreateRDBFromSnapshot(c *qingcloud.Client, params CreateRDBFromSnapshotRequest) (CreateRDBFromSnapshotResponse, error) {
+func (c *RDB) CreateRDBFromSnapshot(params CreateRDBFromSnapshotRequest) (CreateRDBFromSnapshotResponse, error) {
 	var result CreateRDBFromSnapshotResponse
 	err := c.Get("CreateRDBFromSnapshot", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -186,7 +197,7 @@ type CreateTempRDBInstanceFromSnapshotResponse struct {
 
 // CreateTempRDBInstanceFromSnapshot
 // 从备份创建一个临时性数据库实例，并将之添加到指定的数据库集群。
-func CreateTempRDBInstanceFromSnapshot(c *qingcloud.Client, params CreateTempRDBInstanceFromSnapshotRequest) (CreateTempRDBInstanceFromSnapshotResponse, error) {
+func (c *RDB) CreateTempRDBInstanceFromSnapshot(params CreateTempRDBInstanceFromSnapshotRequest) (CreateTempRDBInstanceFromSnapshotResponse, error) {
 	var result CreateTempRDBInstanceFromSnapshotResponse
 	err := c.Get("CreateTempRDBInstanceFromSnapshot", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -200,8 +211,90 @@ type GetRDBInstanceFilesResponse struct {
 	qingcloud.CommonResponse
 }
 
-func GetRDBInstanceFiles(c *qingcloud.Client, params GetRDBInstanceFilesRequest) (GetRDBInstanceFilesResponse, error) {
+func (c *RDB) GetRDBInstanceFiles(params GetRDBInstanceFilesRequest) (GetRDBInstanceFilesResponse, error) {
 	var result GetRDBInstanceFilesResponse
 	err := c.Get("GetRDBInstanceFiles", qingcloud.TransfomRequestToParams(&params), &result)
+	return result, err
+}
+
+type CopyRDBInstanceFilesToFTPRequest struct {
+	RdbInstance qingcloud.String
+	FilesN      qingcloud.NumberedString
+}
+type CopyRDBInstanceFilesToFTPResponse struct {
+	qingcloud.CommonResponse
+	RdbInstance string `json:"rdb_instance"`
+}
+
+// CopyRDBInstanceFilesToFTP 将指定的日志文件拷贝到 FTP 目录。
+func (c *RDB) CopyRDBInstanceFilesToFTP(params CopyRDBInstanceFilesToFTPRequest) (CopyRDBInstanceFilesToFTPResponse, error) {
+	var result CopyRDBInstanceFilesToFTPResponse
+	err := c.Get("CopyRDBInstanceFilesToFTP", qingcloud.TransfomRequestToParams(&params), &result)
+	return result, err
+}
+
+type CeaseRDBInstanceRequest struct {
+	Rdb         qingcloud.String
+	RdbInstance qingcloud.String
+}
+type CeaseRDBInstanceResponse struct {
+	qingcloud.CommonResponse
+	Rdb         string `json:"rdb"`
+	RdbInstance string `json:"rdb_instance"`
+}
+
+// CeaseRDBInstance  销毁指定的数据库实例，目前只能销毁临时性数据库实例。
+func (c *RDB) CeaseRDBInstance(params CeaseRDBInstanceRequest) (CeaseRDBInstanceResponse, error) {
+	var result CeaseRDBInstanceResponse
+	err := c.Get("CeaseRDBInstance", qingcloud.TransfomRequestToParams(&params), &result)
+	return result, err
+}
+
+type ModifyRDBParametersRequest struct {
+	Rdb        qingcloud.String
+	Parameters qingcloud.Dict
+}
+type ModifyRDBParametersResponse struct {
+	qingcloud.CommonResponse
+	Rdb string `json:"rdb" bson:"rdb"`
+}
+
+// ModifyRDBParameters 修改指定 RDB 的配置
+func (c *RDB) ModifyRDBParameters(params ModifyRDBParametersRequest) (ModifyRDBParametersResponse, error) {
+	var result ModifyRDBParametersResponse
+	err := c.Get("ModifyRDBParameters", qingcloud.TransfomRequestToParams(&params), &result)
+	return result, err
+}
+
+type ApplyRDBParameterGroupRequest struct {
+	Rdb qingcloud.String
+}
+type ApplyRDBParameterGroupResponse struct {
+	qingcloud.CommonResponse
+	Rdb string `json:"rdb"`
+}
+
+// ApplyRDBParameterGroup 应用数据库配置。
+func (c *RDB) ApplyRDBParameterGroup(params ApplyRDBParameterGroupRequest) (ApplyRDBParameterGroupResponse, error) {
+	var result ApplyRDBParameterGroupResponse
+	err := c.Get("ApplyRDBParameterGroup", qingcloud.TransfomRequestToParams(&params), &result)
+	return result, err
+}
+
+type DescribeRDBParametersRequest struct {
+	Rdb    qingcloud.String
+	Offset qingcloud.Integer
+	Limit  qingcloud.Integer
+}
+type DescribeRDBParametersResponse struct {
+	qingcloud.CommonResponse
+	TotalCount   int                `json:"total_count"`
+	ParameterSet []RDBParameterItem `json:"parameter_set"`
+}
+
+// DescribeRDBParameters 获取指定 RDB 的配置信息。
+func (c *RDB) DescribeRDBParameters(params DescribeRDBParametersRequest) (DescribeRDBParametersResponse, error) {
+	var result DescribeRDBParametersResponse
+	err := c.Get("DescribeRDBParameters", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
 }

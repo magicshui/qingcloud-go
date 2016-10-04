@@ -4,6 +4,17 @@ import (
 	"github.com/magicshui/qingcloud-go"
 )
 
+type SPARK struct {
+	*qingcloud.Client
+}
+
+func NewClient(clt *qingcloud.Client) *SPARK {
+	var a = &SPARK{
+		Client: clt,
+	}
+	return a
+}
+
 type AddSparkNodesRequest struct {
 	Spark                 qingcloud.String
 	NodeCount             qingcloud.Integer
@@ -18,7 +29,7 @@ type AddSparkNodesResponse struct {
 }
 
 // AddSparkNodes 给 Spark 服务添加一个或多个 worker 节点。
-func AddSparkNodes(c *qingcloud.Client, params AddSparkNodesRequest) (AddSparkNodesResponse, error) {
+func (c *SPARK) AddSparkNodes(params AddSparkNodesRequest) (AddSparkNodesResponse, error) {
 	var result AddSparkNodesResponse
 	err := c.Get("AddSparkNodes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -34,7 +45,7 @@ type DeleteSparkNodesResponse struct {
 }
 
 // DeleteSparkNodes 删除 Spark 服务 worker 节点。
-func DeleteSparkNodes(c *qingcloud.Client, params DeleteSparkNodesRequest) (DeleteSparkNodesResponse, error) {
+func (c *SPARK) DeleteSparkNodes(params DeleteSparkNodesRequest) (DeleteSparkNodesResponse, error) {
 	var result DeleteSparkNodesResponse
 	err := c.Get("AddSparkNodes", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -46,7 +57,7 @@ type StartSparksRequest struct {
 type StartSparksResponse qingcloud.CommonResponse
 
 // StartSparksResponse 启动一台或多台 Spark 服务。
-func StartSparks(c *qingcloud.Client, params StartSparksRequest) (StartSparksResponse, error) {
+func (c *SPARK) StartSparks(params StartSparksRequest) (StartSparksResponse, error) {
 	var result StartSparksResponse
 	err := c.Get("StartSparks", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err
@@ -58,7 +69,7 @@ type StopSparksRequest struct {
 type StopSparksResponse qingcloud.CommonResponse
 
 // StopSparks 关闭一台或多台 Spark 服务。该操作将关闭 Spark 服务的所有 Spark 节点。
-func StopSparks(c *qingcloud.Client, params StopSparksRequest) (StopSparksResponse, error) {
+func (c *SPARK) StopSparks(params StopSparksRequest) (StopSparksResponse, error) {
 	var result StopSparksResponse
 	err := c.Get("StopSparks", qingcloud.TransfomRequestToParams(&params), &result)
 	return result, err

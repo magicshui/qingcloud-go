@@ -44,3 +44,16 @@ type File struct {
 		Size       int    `json:"size"`
 	} `json:"binary_log"`
 }
+
+type RDBParameterItem struct {
+	IsStatic    int         `json:"is_static"`
+	MinValue    interface{} `json:"min_value"`
+	Family      string      `json:"family"`
+	IsReadonly  int         `json:"is_readonly"`
+	VarValue    string      `json:"var_value"`
+	MaxValue    interface{} `json:"max_value"`
+	OptName     string      `json:"opt_name"`
+	VarType     string      `json:"var_type"`
+	VarName     string      `json:"var_name"`
+	SectionName string      `json:"section_name"`
+}
