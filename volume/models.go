@@ -13,6 +13,7 @@ type Volume struct {
 	Instance         struct {
 		InstanceID   string `json:"instance_id"`
 		InstanceName string `json:"instance_name"`
+		Device       string `json:"device"`
 	} `json:"instance"`
 	CreateTime time.Time `json:"create_time"`
 	VolumeID   string    `json:"volume_id"`
