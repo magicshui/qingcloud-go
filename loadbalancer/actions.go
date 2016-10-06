@@ -39,7 +39,7 @@ func (c *LOADBALANCER) CreateLoadBalancer(params CreateLoadBalancerRequest) (Cre
 type DescribeLoadBalancersRequest struct {
 	LoadbalancersN qingcloud.NumberedString
 
-	StatusN    qingcloud.String
+	StatusN    qingcloud.NumberedString
 	SearchWord qingcloud.String
 	TagsN      qingcloud.NumberedString
 	Verbose    qingcloud.Integer
