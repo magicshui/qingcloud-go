@@ -19,7 +19,7 @@ type DescribeEipsRequest struct {
 	EipsN      qingcloud.NumberedString
 	InstanceId qingcloud.NumberedString
 
-	StatusN    qingcloud.String
+	StatusN    qingcloud.NumberedString
 	SearchWord qingcloud.String
 	TagsN      qingcloud.NumberedString
 	Verbose    qingcloud.Integer
