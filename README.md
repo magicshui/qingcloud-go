@@ -1,4 +1,5 @@
 # QingCloud Golang SDK [![Build Status](https://travis-ci.org/magicshui/qingcloud-go.svg?branch=master)](https://travis-ci.org/magicshui/qingcloud-go)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmagicshui%2Fqingcloud-go.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmagicshui%2Fqingcloud-go?ref=badge_shield)
 
 # V2 WIP 
 V2 是一个重写的版本，和老的版本不兼容，目前正在开发中。
@@ -311,3 +312,7 @@ V2 是一个重写的版本，和老的版本不兼容，目前正在开发中�
 ```
 go get gopkg.in/magicshui/qingcloud-go.v1
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmagicshui%2Fqingcloud-go.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmagicshui%2Fqingcloud-go?ref=badge_large)
